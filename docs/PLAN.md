@@ -410,7 +410,14 @@ Known cosmetic gap: the image's `revision` label is `unknown` when built from th
       bg `#26140B`, surface `#3C1C0D`, accent `#D4975F` (7:1; the plan's copper-on-espresso was 2.8:1).
       Verified: OS light/dark, toggle, persistence across reload, no-JS, axe 0 in dark, no CSP errors,
       header on one row down to 320px. CI allows only `dist/theme.js`.
-- [ ] Florian to review Dutch copy and the About/Freelance/home-server wording before pushing.
+- [x] Florian reviewed the Dutch copy ("homelab" instead of "thuisserver", his own phrasing for three lines).
+- [x] **Live 2026-09-29** at https://florianvdab.com (tunnel hostnames `florianvdab.com` + `www`;
+      Cloudflare Redirect Rule `www` → apex, 301, path + query kept). Verified: language redirect on `/`
+      (nl/en/none), `/nl/` `/en/` 200, 404, CV, sitemap, robots.
+- [ ] Cloudflare "Always Use HTTPS" (zone-wide; was off, so `http://` was served in plain text).
+- [ ] Job dates: CV says CCV Lab → 03/2025 and The Beehive from 05/2025; site says 05/2025 and 06/2025.
+- [ ] CV text typo `florian.vdab.com` (the PDF's link itself is correct). Then re-copy the PDF.
+- [ ] Check the OG preview with a debugger now that the apex is live.
 
 ---
 
