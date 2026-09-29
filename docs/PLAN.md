@@ -414,9 +414,9 @@ Known cosmetic gap: the image's `revision` label is `unknown` when built from th
 - [x] **Live 2026-09-29** at https://florianvdab.com (tunnel hostnames `florianvdab.com` + `www`;
       Cloudflare Redirect Rule `www` → apex, 301, path + query kept). Verified: language redirect on `/`
       (nl/en/none), `/nl/` `/en/` 200, 404, CV, sitemap, robots.
-- [ ] Cloudflare "Always Use HTTPS" (zone-wide; was off, so `http://` was served in plain text).
+- [x] Cloudflare "Always Use HTTPS" on (2026-09-29); every `http://` hostname now 301s to `https://`.
 - [ ] Job dates: CV says CCV Lab → 03/2025 and The Beehive from 05/2025; site says 05/2025 and 06/2025.
-- [ ] CV text typo `florian.vdab.com` (the PDF's link itself is correct). Then re-copy the PDF.
+- [x] CV typo fixed by Florian and re-copied (2026-09-29).
 - [ ] Check the OG preview with a debugger now that the apex is live.
 
 ---
