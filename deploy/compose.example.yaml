@@ -1,0 +1,17 @@
+# Production deployment on a Docker host that already runs cloudflared (e.g. ~/stacks/website/compose.yaml).
+# Builds straight from GitHub `main`; `docker compose up -d --build` redeploys the latest commit.
+# Cloudflare Zero Trust → Tunnels → Public hostname: florianvdab.com → http://localhost:8090
+services:
+  website:
+    build:
+      context: https://github.com/Florianvdab/florianvdab.com.git#main
+      pull: true # also refresh the node/nginx base images on every build
+    image: website:local
+    container_name: website
+    ports:
+      - 127.0.0.1:8090:8080 # loopback only: reachable by cloudflared on the host, not the LAN
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    restart: unless-stopped
