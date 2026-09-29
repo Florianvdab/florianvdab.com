@@ -3,6 +3,7 @@ export const site = {
   name: 'Florian Vandenabeele',
   handle: 'Florianvdab',
   url: 'https://florianvdab.com',
+  jobTitle: 'Full-stack developer',
   title: 'Florian Vandenabeele: full-stack developer',
   description:
     'Full-stack developer (Java/Spring, Vue/Nuxt, Flutter) in West Flanders, Belgium. Also builds fast, affordable static websites.',

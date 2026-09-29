@@ -1,0 +1,46 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+---
+
+<Base title={`Page not found · ${site.name}`} description="This page doesn't exist." noindex>
+  <main id="main" class="container not-found">
+    <a class="wordmark" href="/">
+      {site.name}
+    </a>
+    <p class="code" aria-hidden="true">
+      404
+    </p>
+    <h1>This page doesn't exist.</h1>
+    <p>It may have moved, or the link has a typo. Everything worth seeing is on the home page.</p>
+    <a class="button" href="/">
+      Back to the home page
+    </a>
+  </main>
+</Base>
+
+<style>
+  .not-found {
+    display: grid;
+    gap: var(--space-l);
+    justify-items: start;
+    align-content: center;
+    min-height: 100svh;
+    padding-block: var(--space-2xl);
+  }
+
+  .wordmark {
+    font-family: var(--font-heading);
+    font-size: var(--step-1);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .code {
+    font-family: var(--font-heading);
+    font-size: clamp(5rem, 3rem + 10vw, 9rem);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--copper);
+  }
+</style>

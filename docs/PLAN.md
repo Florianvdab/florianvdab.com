@@ -204,6 +204,7 @@ strict (unknown keys fail the build). Project Markdown bodies are optional and c
 │   └── ci.yml                 # PRs + pushes: check, test, build, docker build (no push)
 ├── deploy/
 │   └── compose.example.yaml   # what ~/stacks/website/compose.yaml looks like
+├── design/                  # sources + render script for og-image/favicons
 ├── docker/
 │   └── nginx.conf
 ├── docs/
@@ -271,7 +272,7 @@ zero axe violations.
 Lighthouse mobile 100/100/100/100 (LCP 1.4 s, TBT 0 ms, CLS 0.001); axe 0 violations (WCAG 2.2 AA +
 best-practice; 29 contrast "needs review" items on `color-mix()` backgrounds, computed ≥ 9:1).
 
-### Phase 4: SEO & polish
+### Phase 4: SEO & polish _(done 2026-09-29, OG check pending deploy)_
 
 - `<title>`, description, canonical `https://florianvdab.com/`, Open Graph + Twitter card,
   1200×630 `og-image.png` in the palette (generated once from an SVG, committed).
@@ -282,6 +283,23 @@ best-practice; 29 contrast "needs review" items on `color-mix()` backgrounds, co
 - On-brand 404.
 
 **Accept:** Lighthouse SEO 100; OG preview correct after deploy.
+**Result (2026-09-29):** Lighthouse mobile 100 in every category incl. SEO; axe 0 violations on `/`
+and `/404`; sitemap lists only `/`; 404 is `noindex`. Images are rendered from `design/` (see
+`design/README.md`). Still to do after deploy: check the OG preview with a debugger.
+
+**How to audit on athena** (no host Chromium; everything in a scratch dir, nothing in the repo):
+
+1. `npm run build && npx astro preview --port 4322` (stop it afterwards by the PID listening on :4322;
+   never `pkill -f` a pattern that also matches your own shell command).
+2. In a scratch dir: `npm i puppeteer-core @axe-core/puppeteer lighthouse` inside
+   `zenika/alpine-chrome:with-node` (`--user $(id -u):$(id -g) -e HOME=/work`).
+3. Run with `--network host --shm-size=1g -e CHROME_PATH=/usr/bin/chromium-browser`
+   (the image's own `CHROME_PATH` is a directory) and, because the image has Node 20,
+   `-e NODE_OPTIONS=--import /work/urlparse.mjs` with a `URL.parse` polyfill, or Lighthouse's
+   canonical audit errors and SEO shows no score.
+4. Lighthouse `--form-factor=mobile --chrome-flags='--headless=new --no-sandbox --disable-dev-shm-usage'`;
+   axe via `@axe-core/puppeteer` with WCAG 2.2 AA tags; screenshots at 360/768/1280 via puppeteer.
+   Always check `runtimeError` and `fetchTime` in the JSON so a stale report isn't mistaken for a new one.
 
 ### Phase 5: Docker, CI/CD, deployment, docs
 

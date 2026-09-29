@@ -1,0 +1,99 @@
+<!doctype html>
+<!-- Source of public/og-image.png (1200×630). Regenerate: see design/README.md -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      @font-face {
+        font-family: 'Fraunces';
+        src: url('../node_modules/@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2')
+          format('woff2');
+        font-weight: 100 900;
+      }
+      @font-face {
+        font-family: 'Inter';
+        src: url('../node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2')
+          format('woff2');
+        font-weight: 100 900;
+      }
+      * {
+        margin: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        padding: 80px 96px 0;
+        background: #f7f1de;
+        color: #4e220f;
+        font-family: 'Inter', sans-serif;
+      }
+      .eyebrow {
+        font-size: 26px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      h1 {
+        margin-top: 20px;
+        font-family: 'Fraunces', serif;
+        font-size: 84px;
+        font-weight: 650;
+        line-height: 1.05;
+        white-space: nowrap;
+      }
+      .rule {
+        width: 120px;
+        height: 8px;
+        margin: 32px 0;
+        background: #9d6638;
+        border-radius: 4px;
+      }
+      .tagline {
+        max-width: 900px;
+        font-size: 34px;
+        line-height: 1.35;
+      }
+      footer {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-top: auto;
+        padding-bottom: 56px;
+        font-size: 28px;
+        font-weight: 600;
+      }
+      .monogram {
+        width: 56px;
+        height: 56px;
+      }
+      .band {
+        height: 28px;
+        margin: 0 -96px;
+        background: #b0ba99;
+      }
+    </style>
+  </head>
+  <body>
+    <p class="eyebrow">Full-stack developer · West Flanders, Belgium</p>
+    <h1>Florian Vandenabeele</h1>
+    <div class="rule"></div>
+    <p class="tagline">
+      Java/Spring, Vue/Nuxt and Flutter. Reliable software for government, payments and ERP.
+    </p>
+    <footer>
+      <svg class="monogram" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="12" fill="#9D6638" />
+        <path d="M22 50V14h24v7H30v8h13v7H30v14z" fill="#F7F1DE" />
+      </svg>
+      florianvdab.com
+    </footer>
+    <div class="band"></div>
+  </body>
+</html>

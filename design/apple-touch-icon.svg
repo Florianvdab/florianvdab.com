@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Full-bleed: iOS rounds the corners itself. -->
+  <rect width="64" height="64" fill="#F7F1DE"/>
+  <path d="M24 47V17h20v6H31v7h11v6H31v11z" fill="#9D6638"/>
+</svg>
