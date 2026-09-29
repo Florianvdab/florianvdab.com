@@ -2,18 +2,26 @@
 import { getCollection } from 'astro:content';
 import ProjectCard from './ProjectCard.astro';
 import Section from './Section.astro';
+import type { Locale } from '../i18n/locales';
+import { useTranslations } from '../i18n/ui';
 
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
 // Featured first, then by `order`.
 const projects = (await getCollection('projects')).sort(
   (a, b) => Number(b.data.featured) - Number(a.data.featured) || a.data.order - b.data.order,
 );
 ---
 
-<Section id="projects" title="Projects" wide tinted>
+<Section id="projects" title={t.projects.title} wide tinted>
   <ul class="grid">
     {projects.map((project) => (
       <li>
-        <ProjectCard project={project} />
+        <ProjectCard project={project} locale={locale} />
       </li>
     ))}
   </ul>

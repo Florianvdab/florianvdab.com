@@ -50,24 +50,33 @@ npm run dev          # http://localhost:4321
 
 ## Editing content
 
-All resume content lives in `src/content/`; site-wide details (name, email, links, skill groups)
-in `src/data/site.ts`. The schemas in `src/content.config.ts` reject invalid files, so a typo fails
-the build instead of silently rendering wrong.
+The site is bilingual: English at `/`, Dutch at `/nl/`. All resume content lives in
+`src/content/`, interface text in `src/i18n/ui.ts`, and language-neutral details (name, email,
+links) in `src/data/site.ts`. The schemas in `src/content.config.ts` reject invalid files, so a typo
+or a missing translation fails the build instead of silently rendering wrong.
 
 - **Experience**: `src/content/experience/<company>.json`. Newest first by `start`; durations like
-  "1 yr 4 mos" are computed from `start`/`end` (`YYYY-MM`, `end: null` = current role).
+  "1 yr 4 mos" / "1 jaar 4 maanden" are computed from `start`/`end` (`YYYY-MM`, `end: null` =
+  current role).
 - **Projects**: `src/content/projects/<slug>.md`. Frontmatter only is fine; sorted featured first,
   then by `order`.
+- **Translations**: text fields are `{ en, nl }`. Names that don't change (a company, a city, a
+  product name) may be a plain string. `summary`, `pitch` and `highlights` must always have both.
+- **Interface text**: add a key to both `en` and `nl` in `src/i18n/ui.ts`; a key missing from
+  one language is a type error.
 
 Adding a project:
 
 ```markdown
 ---
 # src/content/projects/my-project.md
-title: My Project
-pitch: One sentence on what it is.
+title: My Project # or { en: ..., nl: ... }
+pitch:
+  en: One sentence on what it is.
+  nl: Eén zin over wat het is.
 highlights:
-  - Up to five short bullet points
+  en: [Up to five short bullet points]
+  nl: [Tot vijf korte opsommingstekens]
 tech: [TypeScript, PostgreSQL]
 repo: https://github.com/Florianvdab/my-project # omit for private projects
 private: false # true shows a "Private repo" badge and a "Demo on request" link
@@ -81,7 +90,9 @@ Social preview and icons are rendered from sources in [`design/`](design/README.
 ## Running with Docker
 
 ```sh
-docker compose -f compose.dev.yaml up --build   # http://127.0.0.1:8091
+docker compose -f compose.dev.yaml up --build web          # production image, http://127.0.0.1:8091
+docker compose -f compose.dev.yaml --profile dev up dev     # hot-reload dev server, http://127.0.0.1:4321
+# set LAN_BIND=0.0.0.0 in a (gitignored) .env to open both to your local network
 # or
 docker build -t florianvdab-site . && docker run --rm -p 8080:8080 florianvdab-site
 ```
@@ -132,12 +143,13 @@ docs/PLAN.md               roadmap and decisions
 public/                    favicons, og-image, robots.txt (copied as-is)
 src/
   components/              page sections (Hero, Experience, ProjectCard, …)
-  content/                 experience (JSON) and projects (Markdown)
+  content/                 experience (JSON) and projects (Markdown), text in { en, nl }
   content.config.ts        Zod schemas
-  data/site.ts             name, links, skill groups
+  data/site.ts             name, email, links, CV
+  i18n/                    locales and all interface text (ui.ts)
   layouts/Base.astro       <head>: SEO, Open Graph, icons
   lib/duration.ts          date formatting + tests
-  pages/                   index and 404
+  pages/                   / (en), /nl/ and the bilingual 404
   styles/global.css        design tokens, reset, shared classes
 ```
 

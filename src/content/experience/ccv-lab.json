@@ -3,13 +3,24 @@
   "company": "CCV Lab",
   "start": "2023-09",
   "end": "2025-05",
-  "location": "Kortrijk · Hybrid",
+  "location": "Kortrijk",
+  "workMode": "Hybrid",
   "type": "Full-time",
-  "summary": "Java Spring & Android development across three major projects, from backend systems to Android payment terminals.",
-  "highlights": [
-    "Helped design and implement an EV charging backend following the OCPI standard",
-    "Refactored and maintained a cloud-based payment API orchestrating transactions on payment terminals",
-    "Built features and refactored the Spring REST API and Android terminals of the SalesPoint platform"
-  ],
+  "summary": {
+    "en": "Java Spring & Android development across three major projects, from backend systems to Android payment terminals.",
+    "nl": "Java Spring- en Android-ontwikkeling in drie grote projecten, van backendsystemen tot Android-betaalterminals."
+  },
+  "highlights": {
+    "en": [
+      "Helped design and implement an EV charging backend following the OCPI standard",
+      "Refactored and maintained a cloud-based payment API orchestrating transactions on payment terminals",
+      "Built features and refactored the Spring REST API and Android terminals of the SalesPoint platform"
+    ],
+    "nl": [
+      "Mee een backend voor het laden van elektrische voertuigen ontworpen en gebouwd volgens de OCPI-standaard",
+      "Een cloudgebaseerde betaal-API gerefactord en onderhouden die transacties op betaalterminals aanstuurt",
+      "Features gebouwd en de Spring REST API en Android-terminals van het SalesPoint-platform gerefactord"
+    ]
+  },
   "skills": ["Java", "Spring", "Android", "OCPI", "REST"]
 }

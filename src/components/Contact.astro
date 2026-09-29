@@ -2,10 +2,18 @@
 import Icon from './Icon.astro';
 import Section from './Section.astro';
 import { site } from '../data/site';
+import type { Locale } from '../i18n/locales';
+import { useTranslations } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const t = useTranslations(Astro.props.locale);
 ---
 
-<Section id="contact" title="Get in touch" tinted>
-  <p class="intro">The quickest way to reach me is email. I'm also on GitHub and LinkedIn.</p>
+<Section id="contact" title={t.contact.title} tinted>
+  <p class="intro">{t.contact.intro}</p>
   <ul class="channels">
     <li>
       <a href={`mailto:${site.email}`}>
@@ -28,7 +36,7 @@ import { site } from '../data/site';
     <li>
       <a href={site.cv.href} download>
         <Icon name="download" />
-        Download my CV <span class="meta">(PDF, {site.cv.size})</span>
+        {t.contact.downloadCv} <span class="meta">(PDF, {site.cv.size})</span>
       </a>
     </li>
   </ul>

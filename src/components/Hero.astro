@@ -3,22 +3,30 @@ import { Picture } from 'astro:assets';
 import Icon from './Icon.astro';
 import profilePicture from '../assets/profile-picture.jpg';
 import { site } from '../data/site';
+import type { Locale } from '../i18n/locales';
+import { useTranslations } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const t = useTranslations(Astro.props.locale);
 ---
 
 <div class="hero container wide">
   <div class="text">
     <p class="location">
       <Icon name="map-pin" size={18} />
-      {site.location}
+      {t.location}
     </p>
-    <h1>Hi, I'm Florian.</h1>
-    <p class="lede">{site.tagline}</p>
+    <h1>{t.hero.greeting}</h1>
+    <p class="lede">{t.tagline}</p>
     <div class="actions">
       <a class="button" href="#projects">
-        See my work
+        {t.hero.seeWork}
       </a>
       <a class="button secondary" href="#freelance">
-        Hire me for a website
+        {t.hero.hire}
       </a>
     </div>
     <ul class="social">
@@ -37,14 +45,14 @@ import { site } from '../data/site';
       <li>
         <a href={site.cv.href} download>
           <Icon name="download" />
-          Download CV <span class="meta">(PDF, {site.cv.size})</span>
+          {t.hero.downloadCv} <span class="meta">(PDF, {site.cv.size})</span>
         </a>
       </li>
     </ul>
   </div>
   <Picture
     src={profilePicture}
-    alt={`Portrait of ${site.name}`}
+    alt={t.hero.portraitAlt}
     formats={['avif', 'webp']}
     widths={[160, 320, 480, 640]}
     sizes="(min-width: 48rem) 320px, 160px"

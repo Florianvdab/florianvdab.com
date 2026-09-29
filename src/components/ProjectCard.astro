@@ -2,27 +2,33 @@
 import type { CollectionEntry } from 'astro:content';
 import Icon from './Icon.astro';
 import { site } from '../data/site';
+import type { Locale } from '../i18n/locales';
+import { tr, useTranslations } from '../i18n/ui';
 
 interface Props {
   project: CollectionEntry<'projects'>;
+  locale: Locale;
 }
 
-const { project } = Astro.props;
-const { title, pitch, highlights, tech, repo, demo, badge } = project.data;
+const { project, locale } = Astro.props;
+const t = useTranslations(locale);
+const { repo, demo, tech } = project.data;
+const title = tr(project.data.title, locale);
+const badge = project.data.badge && tr(project.data.badge, locale);
 const isPrivate = project.data.private;
 const titleId = `project-${project.id}`;
-const demoMail = `mailto:${site.email}?subject=${encodeURIComponent(`Demo request: ${title}`)}`;
+const demoMail = `mailto:${site.email}?subject=${encodeURIComponent(`${t.projects.demoSubject}: ${title}`)}`;
 ---
 
 <article class="card" aria-labelledby={titleId}>
   <h3 id={titleId}>{title}</h3>
-  <p class="pitch">{pitch}</p>
+  <p class="pitch">{project.data.pitch[locale]}</p>
   <ul class="highlights">
-    {highlights.map((item) => (
+    {project.data.highlights[locale].map((item) => (
       <li>{item}</li>
     ))}
   </ul>
-  <ul class="chips" aria-label={`Tech used in ${title}`}>
+  <ul class="chips" aria-label={`${t.projects.techUsed} ${title}`}>
     {tech.map((item) => (
       <li>{item}</li>
     ))}
@@ -31,23 +37,35 @@ const demoMail = `mailto:${site.email}?subject=${encodeURIComponent(`Demo reques
     {repo && (
       <a href={repo}>
         <Icon name="github" size={18} />
-        Source code<span class="visually-hidden"> for {title}</span>
+        {t.projects.sourceCode}
+        <span class="visually-hidden">
+          {' '}
+          {t.projects.for} {title}
+        </span>
       </a>
     )}
     {demo && (
       <a href={demo}>
         <Icon name="arrow-up-right" size={18} />
-        Live demo<span class="visually-hidden"> of {title}</span>
+        {t.projects.liveDemo}
+        <span class="visually-hidden">
+          {' '}
+          {t.projects.of} {title}
+        </span>
       </a>
     )}
     {isPrivate && (
       <>
         <span class="badge">
           <Icon name="lock" size={16} />
-          Private repo
+          {t.projects.privateRepo}
         </span>
         <a href={demoMail}>
-          Demo on request<span class="visually-hidden"> for {title}</span>
+          {t.projects.demoOnRequest}
+          <span class="visually-hidden">
+            {' '}
+            {t.projects.for} {title}
+          </span>
         </a>
       </>
     )}

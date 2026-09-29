@@ -1,12 +1,22 @@
 ---
 import { site } from '../data/site';
+import { homePath, htmlLang, locales, type Locale } from '../i18n/locales';
+import { useTranslations } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const other = locales.find((l) => l !== locale)!;
 
 const links = [
-  { href: '#about', label: 'About' },
-  { href: '#experience', label: 'Experience' },
-  { href: '#projects', label: 'Projects' },
-  { href: '#freelance', label: 'Freelance' },
-  { href: '#contact', label: 'Contact' },
+  { href: '#about', label: t.nav.about },
+  { href: '#experience', label: t.nav.experience },
+  { href: '#projects', label: t.nav.projects },
+  { href: '#freelance', label: t.nav.freelance },
+  { href: '#contact', label: t.nav.contact },
 ];
 ---
 
@@ -15,7 +25,7 @@ const links = [
     <a class="wordmark" href="#top">
       {site.name}
     </a>
-    <nav aria-label="Main">
+    <nav aria-label={t.nav.label}>
       <ul>
         {links.map((link) => (
           <li>
@@ -24,6 +34,16 @@ const links = [
         ))}
       </ul>
     </nav>
+    <a
+      class="lang"
+      href={homePath(other)}
+      hreflang={htmlLang[other]}
+      lang={htmlLang[other]}
+      aria-label={t.switchTo.title}
+      title={t.switchTo.title}
+    >
+      {t.switchTo.label}
+    </a>
   </div>
 </header>
 
@@ -50,6 +70,12 @@ const links = [
     text-decoration: none;
   }
 
+  /* Mobile: name + language switch on the first row, nav links wrap below. */
+  nav {
+    order: 3;
+    flex-basis: 100%;
+  }
+
   ul {
     display: flex;
     flex-wrap: wrap;
@@ -72,6 +98,21 @@ const links = [
     text-decoration-thickness: 2px;
   }
 
+  .lang {
+    padding: var(--space-2xs) var(--space-s);
+    border: 1px solid var(--color-text);
+    border-radius: var(--radius-s);
+    font-size: var(--step--1);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+  }
+
+  .lang:hover {
+    background: var(--color-text);
+    color: var(--color-bg);
+  }
+
   @media (min-width: 48rem) {
     .site-header {
       position: sticky;
@@ -79,6 +120,12 @@ const links = [
       z-index: 10;
       background: color-mix(in srgb, var(--color-bg) 92%, transparent);
       backdrop-filter: blur(6px);
+    }
+
+    nav {
+      order: 0;
+      flex-basis: auto;
+      margin-left: auto;
     }
 
     nav a {

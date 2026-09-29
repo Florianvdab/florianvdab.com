@@ -1,9 +1,15 @@
 ---
+// One 404 for every URL (nginx serves it), so it speaks both languages.
 import Base from '../layouts/Base.astro';
 import { site } from '../data/site';
 ---
 
-<Base title={`Page not found · ${site.name}`} description="This page doesn't exist." noindex>
+<Base
+  locale="en"
+  title={`Page not found · ${site.name}`}
+  description="This page doesn't exist."
+  noindex
+>
   <main id="main" class="container not-found">
     <a class="wordmark" href="/">
       {site.name}
@@ -13,9 +19,17 @@ import { site } from '../data/site';
     </p>
     <h1>This page doesn't exist.</h1>
     <p>It may have moved, or the link has a typo. Everything worth seeing is on the home page.</p>
-    <a class="button" href="/">
-      Back to the home page
-    </a>
+    <p lang="nl-BE">
+      Deze pagina bestaat niet. Alles wat de moeite waard is, vind je op de homepagina.
+    </p>
+    <div class="actions">
+      <a class="button" href="/">
+        Back to the home page
+      </a>
+      <a class="button secondary" href="/nl/" lang="nl-BE">
+        Naar de homepagina
+      </a>
+    </div>
   </main>
 </Base>
 
@@ -34,6 +48,12 @@ import { site } from '../data/site';
     font-size: var(--step-1);
     font-weight: 700;
     text-decoration: none;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-s);
   }
 
   .code {

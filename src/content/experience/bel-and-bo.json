@@ -1,11 +1,15 @@
 {
-  "role": "Intern .NET C# Developer",
+  "role": { "en": "Intern .NET C# Developer", "nl": "Stagiair .NET C# Developer" },
   "company": "Bel&Bo",
   "start": "2021-02",
   "end": "2021-05",
-  "location": "Deerlijk · On-site",
+  "location": "Deerlijk",
+  "workMode": "On-site",
   "type": "Internship",
-  "summary": ".NET / C# development internship.",
-  "highlights": [],
+  "summary": {
+    "en": ".NET / C# development internship.",
+    "nl": "Stage in .NET/C#-ontwikkeling."
+  },
+  "highlights": { "en": [], "nl": [] },
   "skills": [".NET", "C#"]
 }

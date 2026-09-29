@@ -20,19 +20,24 @@ npm run build          static build to dist/
 npm run check          astro check (types + templates)
 npm test               vitest run (src/**/*.test.ts)
 npm run format         prettier --write (format:check in CI)
+docker compose -f compose.dev.yaml up -d --build web          production image on :8091
+docker compose -f compose.dev.yaml --profile dev up -d dev     hot-reload dev server on :4321
+                       (athena's gitignored .env sets LAN_BIND=0.0.0.0 → http://192.168.55.10:8091 / :4321)
 ```
 
 ## Conventions
 
-- **Content lives in `src/content/`** (experience JSON, project Markdown), schemas in `src/content.config.ts`;
-  site constants and skill groups in `src/data/site.ts`. Don't hard-code resume content in components.
+- **Bilingual (en at `/`, nl at `/nl/`).** Content lives in `src/content/` with `{ en, nl }` text fields
+  (schemas in `src/content.config.ts`); interface text in `src/i18n/ui.ts` (both languages or it's a
+  type error); language-neutral constants in `src/data/site.ts`. Every component takes a `locale` prop.
+  Don't hard-code resume content or UI strings in components. Dutch is written in the informal "je" form.
 - Never invent copy (project descriptions, highlights, bios). Use what Florian supplied or ask.
 - **Never publish how the home server is secured** (firewall, tunnel setup, SSH, backups, fail2ban,
   which services are public, the password manager). What it runs is fine; how it's protected is not.
 - **No client JS unless justified.** `dist/` should contain no `.js`. No inline `<script>`/`<style>`/`style=""`:
   the CSP is `script-src 'self'; style-src 'self'` (hence `build.inlineStylesheets: 'never'`).
 - Durations are computed at build time from `start`/`end`, never hard-coded.
-- Components in `src/components/`; `Section.astro` wraps each page section (heading + `aria-labelledby`).
+- Components in `src/components/`; `Home.astro` is the whole page for one locale, `Section.astro` wraps each page section (heading + `aria-labelledby`).
   Shared classes (`.container`, `.wide`, `.button`, `.chips`) live in `global.css`.
 - Semantic HTML, visible focus (copper outline), respect `prefers-reduced-motion`. Mobile-first, must work at 360px.
 

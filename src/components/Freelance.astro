@@ -2,35 +2,27 @@
 import Icon, { type IconName } from './Icon.astro';
 import Section from './Section.astro';
 import { site } from '../data/site';
+import type { Locale } from '../i18n/locales';
+import { useTranslations } from '../i18n/ui';
 
-const points: { icon: IconName; title: string; text: string }[] = [
-  {
-    icon: 'zap',
-    title: 'Fast & SEO-friendly',
-    text: 'Static pages load almost instantly and are easy for search engines to read.',
-  },
-  {
-    icon: 'wallet',
-    title: 'Cheap to host',
-    text: 'No server-side code or database to run, so hosting costs little or nothing.',
-  },
-  {
-    icon: 'key',
-    title: 'You own everything',
-    text: 'The code, the content and the domain are yours. No lock-in to a site builder.',
-  },
+interface Props {
+  locale: Locale;
+}
+
+const t = useTranslations(Astro.props.locale);
+const { points } = t.freelance;
+const items: { icon: IconName; title: string; text: string }[] = [
+  { icon: 'zap', ...points.fast },
+  { icon: 'wallet', ...points.cheap },
+  { icon: 'key', ...points.yours },
 ];
-
-const mail = `mailto:${site.email}?subject=${encodeURIComponent('Website project')}`;
+const mail = `mailto:${site.email}?subject=${encodeURIComponent(t.freelance.mailSubject)}`;
 ---
 
-<Section id="freelance" title="Need a website?">
-  <p class="intro">
-    In my free time I build fast, affordable static websites for small businesses, portfolios and
-    event or landing pages.
-  </p>
+<Section id="freelance" title={t.freelance.title}>
+  <p class="intro">{t.freelance.intro}</p>
   <ul class="points">
-    {points.map((point) => (
+    {items.map((point) => (
       <li>
         <Icon name={point.icon} size={28} />
         <div>
@@ -42,7 +34,7 @@ const mail = `mailto:${site.email}?subject=${encodeURIComponent('Website project
   </ul>
   <a class="button" href={mail}>
     <Icon name="mail" />
-    Tell me about your project
+    {t.freelance.cta}
   </a>
 </Section>
 

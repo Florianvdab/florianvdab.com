@@ -1,27 +1,28 @@
 ---
 import Icon, { type IconName } from './Icon.astro';
 import Section from './Section.astro';
+import type { Locale } from '../i18n/locales';
+import { useTranslations } from '../i18n/ui';
 
+interface Props {
+  locale: Locale;
+}
+
+const t = useTranslations(Astro.props.locale);
 const hobbies: { icon: IconName; text: string }[] = [
-  { icon: 'book-open', text: 'Reading' },
-  { icon: 'gamepad', text: 'Gaming' },
-  { icon: 'server', text: 'Tinkering with my home server (it serves this site)' },
+  { icon: 'book-open', text: t.about.hobbies.reading },
+  { icon: 'gamepad', text: t.about.hobbies.gaming },
+  { icon: 'server', text: t.about.hobbies.server },
 ];
 ---
 
-<Section id="about" title="About">
+<Section id="about" title={t.about.title}>
   <div class="prose">
-    <p>
-      I'm a full-stack developer from West Flanders. Since 2021 I've worked on a cloud-based ERP,
-      payment terminals and an EV-charging backend, and today I help modernise Belgian federal
-      government applications.
-    </p>
-    <p>
-      Most of my work is Java and Spring on the backend with Vue/Nuxt on the front, plus Flutter and
-      Android when there's a mobile side to it.
-    </p>
+    {t.about.paragraphs.map((paragraph) => (
+      <p>{paragraph}</p>
+    ))}
   </div>
-  <h3 class="hobbies-title">Outside of work</h3>
+  <h3 class="hobbies-title">{t.about.outside}</h3>
   <ul class="hobbies">
     {hobbies.map((hobby) => (
       <li>

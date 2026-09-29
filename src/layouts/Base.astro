@@ -3,28 +3,48 @@ import '@fontsource-variable/inter';
 import '@fontsource-variable/fraunces';
 import '../styles/global.css';
 import { site } from '../data/site';
+import { defaultLocale, homePath, htmlLang, locales, ogLocale, type Locale } from '../i18n/locales';
+import { useTranslations } from '../i18n/ui';
 
 interface Props {
+  locale: Locale;
   title?: string;
   description?: string;
   /** Keep a page out of search results (e.g. the 404). */
   noindex?: boolean;
 }
 
-const { title = site.title, description = site.description, noindex = false } = Astro.props;
+const { locale, noindex = false } = Astro.props;
+const t = useTranslations(locale);
+const title = Astro.props.title ?? t.meta.title;
+const description = Astro.props.description ?? t.meta.description;
 const canonical = new URL(Astro.url.pathname, site.url).href;
 const ogImage = new URL('/og-image.png', site.url).href;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={htmlLang[locale]}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content={site.name} />
-    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
+    {noindex ? (
+      <meta name="robots" content="noindex" />
+    ) : (
+      <>
+        <link rel="canonical" href={canonical} />
+        {locales.map((l) => (
+          <link rel="alternate" hreflang={htmlLang[l]} href={new URL(homePath(l), site.url).href} />
+        ))}
+        <link
+          rel="alternate"
+          hreflang="x-default"
+          href={new URL(homePath(defaultLocale), site.url).href}
+        />
+      </>
+    )}
 
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -40,8 +60,13 @@ const ogImage = new URL('/og-image.png', site.url).href;
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content={`${site.name}, ${site.jobTitle}`} />
-    <meta property="og:locale" content="en_GB" />
+    <meta property="og:image:alt" content={`${site.name}, ${t.meta.jobTitle}`} />
+    <meta property="og:locale" content={ogLocale[locale]} />
+    {locales
+      .filter((l) => l !== locale)
+      .map((l) => (
+        <meta property="og:locale:alternate" content={ogLocale[l]} />
+      ))}
     <meta name="twitter:card" content="summary_large_image" />
 
     <meta name="generator" content={Astro.generator} />
@@ -49,7 +74,7 @@ const ogImage = new URL('/og-image.png', site.url).href;
   </head>
   <body id="top">
     <a class="skip-link" href="#main">
-      Skip to content
+      {t.skipLink}
     </a>
     <slot />
   </body>

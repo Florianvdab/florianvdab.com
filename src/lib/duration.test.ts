@@ -51,4 +51,18 @@ describe('helpers', () => {
     expect(formatYearMonth('2025-06')).toBe('Jun 2025');
     expect(formatYearMonth('2021-12')).toBe('Dec 2021');
   });
+
+  it('formats Dutch months', () => {
+    expect(formatYearMonth('2025-03', 'nl')).toBe('mrt 2025');
+    expect(formatYearMonth('2025-05', 'nl')).toBe('mei 2025');
+  });
+});
+
+describe('formatDuration in Dutch', () => {
+  it('uses Dutch units with correct plurals', () => {
+    expect(formatDuration('2023-09', '2023-09', undefined, 'nl')).toBe('1 maand');
+    expect(formatDuration('2021-02', '2021-05', undefined, 'nl')).toBe('4 maanden');
+    expect(formatDuration('2021-08', '2023-08', undefined, 'nl')).toBe('2 jaar 1 maand');
+    expect(formatDuration('2022-01', '2022-12', undefined, 'nl')).toBe('1 jaar');
+  });
 });

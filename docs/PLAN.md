@@ -389,6 +389,19 @@ Known cosmetic gap: the image's `revision` label is `unknown` when built from th
   `static.cloudflareinsights.com` / `cloudflareinsights.com`).
 - Project screenshots via `astro:assets`.
 
+**Progress (2026-09-29):**
+
+- [x] Profile photo (`src/assets/profile-picture.jpg`, copied from the external drive with metadata
+      stripped; served as AVIF/WebP via `astro:assets`).
+- [x] CV download (`public/CV-Florian.pdf`, size label computed at build). Florian removed the phone
+      number; the visible website text on the CV still reads `florian.vdab.com` (typo, link itself is fine).
+- [x] Dutch version at `/nl/`: `src/i18n/` (locales + dictionary), `{ en, nl }` content fields,
+      hreflang/x-default, `og:locale`, sitemap alternates, language switch in the header, bilingual 404.
+- [x] LAN review: `compose.dev.yaml` binds to `${LAN_BIND}` (athena `.env`: `0.0.0.0`) → production
+      image on :8091, hot-reload dev server on :4321. Docker-published ports are LAN-only via ufw.
+- [ ] Dark mode toggle.
+- [ ] Florian to review Dutch copy and the About/Freelance/home-server wording before pushing.
+
 ---
 
 ## 9. Open inputs from Florian

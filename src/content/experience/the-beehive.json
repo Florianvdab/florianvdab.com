@@ -1,15 +1,27 @@
 {
   "role": "Full Stack Developer",
   "company": "The Beehive",
-  "client": "BOSA (Belgian federal government)",
+  "client": {
+    "en": "BOSA (Belgian federal government)",
+    "nl": "BOSA (Belgische federale overheid)"
+  },
   "start": "2025-06",
   "end": null,
-  "location": "Belgium",
+  "location": { "en": "Belgium", "nl": "België" },
   "type": "Full-time",
-  "summary": "Full-stack consultant at BOSA via The Beehive, contributing to the modernization of government systems.",
-  "highlights": [
-    "Java/Spring and Nuxt/Vue development on government applications",
-    "Refactoring a monolith and migrating functionality to microservices"
-  ],
+  "summary": {
+    "en": "Full-stack consultant at BOSA via The Beehive, contributing to the modernization of government systems.",
+    "nl": "Full-stack consultant bij BOSA via The Beehive, meewerkend aan de modernisering van overheidssystemen."
+  },
+  "highlights": {
+    "en": [
+      "Java/Spring and Nuxt/Vue development on government applications",
+      "Refactoring a monolith and migrating functionality to microservices"
+    ],
+    "nl": [
+      "Java/Spring- en Nuxt/Vue-ontwikkeling voor overheidsapplicaties",
+      "Een monoliet refactoren en functionaliteit migreren naar microservices"
+    ]
+  },
   "skills": ["Java", "Spring", "Nuxt", "Vue", "Microservices"]
 }

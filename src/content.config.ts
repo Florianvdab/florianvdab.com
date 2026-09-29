@@ -4,21 +4,34 @@ import { z } from 'astro/zod';
 import { YEAR_MONTH, monthIndex } from './lib/duration';
 
 const yearMonth = z.string().regex(YEAR_MONTH, 'Use YYYY-MM, e.g. "2025-06"');
+const nonEmpty = z.string().min(1);
+
+/** Text that must be translated: `{ en: "...", nl: "..." }`. */
+const localized = z.strictObject({ en: nonEmpty, nl: nonEmpty });
+/** Text that may be the same in every language (names, cities): a plain string or `{ en, nl }`. */
+const text = z.union([nonEmpty, localized]);
+/** Translated bullet lists; both languages must have the same number of items. */
+const localizedList = z
+  .strictObject({ en: z.array(nonEmpty), nl: z.array(nonEmpty) })
+  .refine((list) => list.en.length === list.nl.length, {
+    message: '"en" and "nl" must have the same number of items',
+  });
 
 const experience = defineCollection({
   loader: glob({ pattern: '*.json', base: './src/content/experience' }),
   schema: z
     .strictObject({
-      role: z.string().min(1),
-      company: z.string().min(1),
-      client: z.string().min(1).optional(),
+      role: text,
+      company: nonEmpty,
+      client: text.optional(),
       start: yearMonth,
       end: yearMonth.nullable(),
-      location: z.string().min(1),
+      location: text,
+      workMode: z.enum(['On-site', 'Hybrid', 'Remote']).optional(),
       type: z.enum(['Full-time', 'Part-time', 'Freelance', 'Internship']),
-      summary: z.string().min(1),
-      highlights: z.array(z.string().min(1)),
-      skills: z.array(z.string().min(1)),
+      summary: localized,
+      highlights: localizedList,
+      skills: z.array(nonEmpty),
     })
     // Zod 4 runs this even when a date failed its regex; skip then, the regex reports it.
     .refine(
@@ -39,19 +52,21 @@ const projects = defineCollection({
   schema: ({ image }) =>
     z
       .strictObject({
-        title: z.string().min(1),
-        pitch: z.string().min(1),
-        highlights: z.array(z.string().min(1)).min(1).max(5),
-        tech: z.array(z.string().min(1)).min(1),
+        title: text,
+        pitch: localized,
+        highlights: localizedList.refine((list) => list.en.length >= 1 && list.en.length <= 5, {
+          message: 'Use 1 to 5 highlights',
+        }),
+        tech: z.array(nonEmpty).min(1),
         repo: z.url().optional(),
         demo: z.url().optional(),
         private: z.boolean(),
         /** Short label shown instead of links, e.g. for a project with no public code. */
-        badge: z.string().min(1).max(40).optional(),
+        badge: text.optional(),
         featured: z.boolean(),
         order: z.number().int(),
         image: image().optional(),
-        imageAlt: z.string().optional(),
+        imageAlt: localized.optional(),
       })
       .refine((p) => !(p.private && p.repo), {
         message: 'A private project must not link a repo',

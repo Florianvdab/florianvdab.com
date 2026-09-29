@@ -1,0 +1,51 @@
+---
+// The full single-page site for one locale. src/pages/index.astro (en) and nl/index.astro render it.
+import About from './About.astro';
+import Contact from './Contact.astro';
+import Experience from './Experience.astro';
+import Footer from './Footer.astro';
+import Freelance from './Freelance.astro';
+import Header from './Header.astro';
+import Hero from './Hero.astro';
+import Projects from './Projects.astro';
+import Skills from './Skills.astro';
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+import type { Locale } from '../i18n/locales';
+import { useTranslations } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+// schema.org Person. A JSON data block, not executed, so the CSP's script-src doesn't apply.
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  alternateName: site.handle,
+  jobTitle: t.meta.jobTitle,
+  url: site.url,
+  email: `mailto:${site.email}`,
+  address: { '@type': 'PostalAddress', addressRegion: 'West Flanders', addressCountry: 'BE' },
+  sameAs: [site.social.github, site.social.linkedin],
+};
+---
+
+<Base locale={locale}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(person)} />
+  <Header locale={locale} />
+  <main id="main" tabindex="-1">
+    <Hero locale={locale} />
+    <About locale={locale} />
+    <Experience locale={locale} />
+    <Skills locale={locale} />
+    <Projects locale={locale} />
+    <Freelance locale={locale} />
+    <Contact locale={locale} />
+  </main>
+  <Footer locale={locale} />
+</Base>
