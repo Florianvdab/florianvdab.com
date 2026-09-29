@@ -301,7 +301,7 @@ and `/404`; sitemap lists only `/`; 404 is `noindex`. Images are rendered from `
    axe via `@axe-core/puppeteer` with WCAG 2.2 AA tags; screenshots at 360/768/1280 via puppeteer.
    Always check `runtimeError` and `fetchTime` in the JSON so a stale report isn't mistaken for a new one.
 
-### Phase 5: Docker, CI/CD, deployment, docs
+### Phase 5: Docker, CI/CD, deployment, docs _(done on athena 2026-09-29; Cloudflare hostname pending)_
 
 **Dockerfile** (multi-stage):
 
@@ -371,6 +371,14 @@ without one (cloudflared container in the same compose); updating; structure; li
 **Accept:** `docker build` succeeds on athena; container runs as non-root, healthcheck `healthy`,
 image < 30 MB; `curl -I` shows the security headers; CI green on `main`;
 `stacks update website` rebuilds from GitHub; https://florianvdab.com serves the site.
+**Result (2026-09-29):** image 13.3 MB on `nginx-unprivileged:alpine-slim` (the `alpine` variant was
+55 MB), uid 101, `healthy`, read-only rootfs + `cap_drop: ALL`. All headers present on 200 and 404;
+Chromium load shows no CSP violations and both fonts load. CI green on first run (1m01s).
+`~/stacks/website` runs (built from GitHub `main`, `127.0.0.1:8090` only); `stacks update website`
+rebuilds cleanly; nightly cron at 04:00 added. **Left for Florian:** add public hostname
+`florianvdab.com` (+ `www`) → `http://localhost:8090` in the tunnel, delete the stale `dashboard.`
+hostname, add an Uptime Kuma HTTP monitor for `http://127.0.0.1:8090`, check the OG preview.
+Known cosmetic gap: the image's `revision` label is `unknown` when built from the git URL.
 
 ### Phase 6: Nice-to-haves (ask first)
 
