@@ -1,12 +1,29 @@
-# Build and run the production image locally: http://127.0.0.1:8091
-#   docker compose -f compose.dev.yaml up --build     (Ctrl+C, then `down` to clean up)
+# Local preview. Ports bind to 127.0.0.1 unless LAN_BIND is set (e.g. LAN_BIND=0.0.0.0 in a
+# gitignored .env) to view from another machine on the network.
+#
+#   docker compose -f compose.dev.yaml up --build web        production image  → :8091
+#   docker compose -f compose.dev.yaml --profile dev up dev  hot-reload dev server → :4321
+#   docker compose -f compose.dev.yaml --profile dev down    stop both
 services:
   web:
     build: .
     image: florianvdab-site:dev
     ports:
-      - 127.0.0.1:8091:8080
+      - ${LAN_BIND:-127.0.0.1}:8091:8080
     read_only: true
     tmpfs: [/tmp]
     cap_drop: [ALL]
     security_opt: [no-new-privileges:true]
+
+  dev:
+    profiles: [dev]
+    image: node:24-bookworm-slim # glibc, so it can reuse the host's node_modules (run `npm ci` first)
+    user: ${UID:-1000}:${GID:-1000}
+    working_dir: /app
+    volumes:
+      - .:/app
+    environment:
+      HOME: /tmp
+    command: npx astro dev --host 0.0.0.0 --port 4321
+    ports:
+      - ${LAN_BIND:-127.0.0.1}:4321:4321

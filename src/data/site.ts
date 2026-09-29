@@ -11,6 +11,7 @@ export const site = {
     'Full-stack developer (Java/Spring, Vue/Nuxt, Flutter) building reliable software for government, payments and ERP.',
   email: 'Florian.vdab@outlook.com',
   location: 'West Flanders, Belgium',
+  cv: { href: '/CV-Florian.pdf', size: '145 KB' },
   social: {
     github: 'https://github.com/Florianvdab',
     linkedin: 'https://www.linkedin.com/in/florianvdab/',

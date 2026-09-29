@@ -1,44 +1,100 @@
 ---
+import { Picture } from 'astro:assets';
 import Icon from './Icon.astro';
+import profilePicture from '../assets/profile-picture.jpg';
 import { site } from '../data/site';
 ---
 
-<div class="hero container">
-  <p class="location">
-    <Icon name="map-pin" size={18} />
-    {site.location}
-  </p>
-  <h1>Hi, I'm Florian.</h1>
-  <p class="lede">{site.tagline}</p>
-  <div class="actions">
-    <a class="button" href="#projects">
-      See my work
-    </a>
-    <a class="button secondary" href="#freelance">
-      Hire me for a website
-    </a>
+<div class="hero container wide">
+  <div class="text">
+    <p class="location">
+      <Icon name="map-pin" size={18} />
+      {site.location}
+    </p>
+    <h1>Hi, I'm Florian.</h1>
+    <p class="lede">{site.tagline}</p>
+    <div class="actions">
+      <a class="button" href="#projects">
+        See my work
+      </a>
+      <a class="button secondary" href="#freelance">
+        Hire me for a website
+      </a>
+    </div>
+    <ul class="social">
+      <li>
+        <a href={site.social.github}>
+          <Icon name="github" />
+          GitHub
+        </a>
+      </li>
+      <li>
+        <a href={site.social.linkedin}>
+          <Icon name="linkedin" />
+          LinkedIn
+        </a>
+      </li>
+      <li>
+        <a href={site.cv.href} download>
+          <Icon name="download" />
+          Download CV <span class="meta">(PDF, {site.cv.size})</span>
+        </a>
+      </li>
+    </ul>
   </div>
-  <ul class="social">
-    <li>
-      <a href={site.social.github}>
-        <Icon name="github" />
-        GitHub
-      </a>
-    </li>
-    <li>
-      <a href={site.social.linkedin}>
-        <Icon name="linkedin" />
-        LinkedIn
-      </a>
-    </li>
-  </ul>
+  <Picture
+    src={profilePicture}
+    alt={`Portrait of ${site.name}`}
+    formats={['avif', 'webp']}
+    widths={[160, 320, 480, 640]}
+    sizes="(min-width: 48rem) 320px, 160px"
+    loading="eager"
+    fetchpriority="high"
+    class="portrait"
+  />
 </div>
 
 <style>
   .hero {
     display: grid;
-    gap: var(--space-l);
+    gap: var(--space-xl);
+    align-items: center;
     padding-block: var(--space-2xl);
+  }
+
+  /* Mobile: portrait above the text. */
+  .hero :global(picture) {
+    order: -1;
+  }
+
+  .hero :global(.portrait) {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid var(--color-bg);
+    outline: 2px solid var(--sage);
+  }
+
+  @media (min-width: 48rem) {
+    .hero {
+      grid-template-columns: 1fr auto;
+      gap: var(--space-2xl);
+    }
+
+    .hero :global(picture) {
+      order: 0;
+    }
+
+    .hero :global(.portrait) {
+      width: 320px;
+      height: 320px;
+    }
+  }
+
+  .text {
+    display: grid;
+    gap: var(--space-l);
   }
 
   .location {
@@ -68,7 +124,7 @@ import { site } from '../data/site';
   .social {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-l);
+    gap: var(--space-s) var(--space-l);
     padding: 0;
     list-style: none;
   }
@@ -78,5 +134,10 @@ import { site } from '../data/site';
     align-items: center;
     gap: var(--space-xs);
     font-weight: 500;
+  }
+
+  .meta {
+    font-weight: 400;
+    font-size: var(--step--1);
   }
 </style>

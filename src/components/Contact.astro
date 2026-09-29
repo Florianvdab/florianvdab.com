@@ -25,6 +25,12 @@ import { site } from '../data/site';
         LinkedIn
       </a>
     </li>
+    <li>
+      <a href={site.cv.href} download>
+        <Icon name="download" />
+        Download my CV <span class="meta">(PDF, {site.cv.size})</span>
+      </a>
+    </li>
   </ul>
 </Section>
 
@@ -47,6 +53,11 @@ import { site } from '../data/site';
     font-size: var(--step-1);
     font-weight: 500;
     overflow-wrap: anywhere;
+  }
+
+  .meta {
+    font-size: var(--step--1);
+    font-weight: 400;
   }
 
   .channels :global(.icon) {
