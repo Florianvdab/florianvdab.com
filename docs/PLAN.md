@@ -399,6 +399,10 @@ Known cosmetic gap: the image's `revision` label is `unknown` when built from th
       hreflang/x-default, `og:locale`, sitemap alternates, language switch in the header, bilingual 404.
 - [x] LAN review: `compose.dev.yaml` binds to `${LAN_BIND}` (athena `.env`: `0.0.0.0`) → production
       image on :8091, hot-reload dev server on :4321. Docker-published ports are LAN-only via ufw.
+- [x] Dutch is the default (Florian, 2026-09-29): pages at `/nl/` and `/en/`; nginx redirects `/`
+      (302, `Vary: Accept-Language`, `no-store`) on the browser's first language: nl → `/nl/`, any
+      other → `/en/`, none → `/nl/`. No cookie, so the site stays cookie-free; a manual switch isn't
+      remembered on the next visit to `/`. `x-default` → `/`. Covered by the CI smoke test.
 - [ ] Dark mode toggle.
 - [ ] Florian to review Dutch copy and the About/Freelance/home-server wording before pushing.
 

@@ -5,15 +5,17 @@ import { defineConfig } from 'astro/config';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://florianvdab.com',
-  // English at /, Dutch at /nl/. Keep in sync with src/i18n/locales.ts.
+  // Dutch at /nl/, English at /en/; nginx redirects / per visitor. Keep in sync with src/i18n/locales.ts.
   i18n: {
     locales: ['en', 'nl'],
-    defaultLocale: 'en',
-    routing: { prefixDefaultLocale: false },
+    defaultLocale: 'nl',
+    routing: { prefixDefaultLocale: true, redirectToDefaultLocale: false },
   },
   integrations: [
     sitemap({
-      i18n: { defaultLocale: 'en', locales: { en: 'en', nl: 'nl-BE' } },
+      // `/` is only a redirect, so list just the two real pages.
+      filter: (page) => page !== 'https://florianvdab.com/',
+      i18n: { defaultLocale: 'nl', locales: { nl: 'nl-BE', en: 'en' } },
     }),
   ],
   build: {

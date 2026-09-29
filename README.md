@@ -50,7 +50,8 @@ npm run dev          # http://localhost:4321
 
 ## Editing content
 
-The site is bilingual: English at `/`, Dutch at `/nl/`. All resume content lives in
+The site is bilingual: Dutch at `/nl/`, English at `/en/`. nginx sends visitors of `/` to the
+language their browser prefers first (Dutch → `/nl/`, anything else → `/en/`, no preference → Dutch). All resume content lives in
 `src/content/`, interface text in `src/i18n/ui.ts`, and language-neutral details (name, email,
 links) in `src/data/site.ts`. The schemas in `src/content.config.ts` reject invalid files, so a typo
 or a missing translation fails the build instead of silently rendering wrong.
@@ -110,7 +111,7 @@ works like this:
    `~/stacks/website/compose.yaml`) and start it:
    ```sh
    docker compose up -d --build
-   curl -I http://127.0.0.1:8090      # 200 + security headers
+   curl -I http://127.0.0.1:8090/nl/  # 200 + security headers
    ```
    The port is published on `127.0.0.1` only: the tunnel reaches it, the LAN doesn't.
 2. In **Cloudflare Zero Trust → Networks → Tunnels → your tunnel → Public hostnames**, add
@@ -149,7 +150,7 @@ src/
   i18n/                    locales and all interface text (ui.ts)
   layouts/Base.astro       <head>: SEO, Open Graph, icons
   lib/duration.ts          date formatting + tests
-  pages/                   / (en), /nl/ and the bilingual 404
+  pages/                   /nl/, /en/, the bilingual 404 and a dev-only fallback for /
   styles/global.css        design tokens, reset, shared classes
 ```
 

@@ -3,7 +3,7 @@ import '@fontsource-variable/inter';
 import '@fontsource-variable/fraunces';
 import '../styles/global.css';
 import { site } from '../data/site';
-import { defaultLocale, homePath, htmlLang, locales, ogLocale, type Locale } from '../i18n/locales';
+import { homePath, htmlLang, locales, ogLocale, type Locale } from '../i18n/locales';
 import { useTranslations } from '../i18n/ui';
 
 interface Props {
@@ -38,11 +38,8 @@ const ogImage = new URL('/og-image.png', site.url).href;
         {locales.map((l) => (
           <link rel="alternate" hreflang={htmlLang[l]} href={new URL(homePath(l), site.url).href} />
         ))}
-        <link
-          rel="alternate"
-          hreflang="x-default"
-          href={new URL(homePath(defaultLocale), site.url).href}
-        />
+        {/* `/` redirects each visitor to their language, which is what x-default is for. */}
+        <link rel="alternate" hreflang="x-default" href={new URL('/', site.url).href} />
       </>
     )}
 

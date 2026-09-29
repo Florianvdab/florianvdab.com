@@ -1,13 +1,13 @@
 ---
-// One 404 for every URL (nginx serves it), so it speaks both languages.
+// One 404 for every URL (nginx serves it), so it speaks both languages: Dutch first, as the default.
 import Base from '../layouts/Base.astro';
 import { site } from '../data/site';
 ---
 
 <Base
-  locale="en"
-  title={`Page not found · ${site.name}`}
-  description="This page doesn't exist."
+  locale="nl"
+  title={`Pagina niet gevonden · ${site.name}`}
+  description="Deze pagina bestaat niet."
   noindex
 >
   <main id="main" class="container not-found">
@@ -17,17 +17,21 @@ import { site } from '../data/site';
     <p class="code" aria-hidden="true">
       404
     </p>
-    <h1>This page doesn't exist.</h1>
-    <p>It may have moved, or the link has a typo. Everything worth seeing is on the home page.</p>
-    <p lang="nl-BE">
-      Deze pagina bestaat niet. Alles wat de moeite waard is, vind je op de homepagina.
+    <h1>Deze pagina bestaat niet.</h1>
+    <p>
+      Misschien is ze verhuisd, of zit er een typfout in de link. Alles wat de moeite waard is, vind
+      je op de homepagina.
+    </p>
+    <p lang="en">
+      This page doesn't exist. It may have moved, or the link has a typo. Everything worth seeing is
+      on the home page.
     </p>
     <div class="actions">
-      <a class="button" href="/">
-        Back to the home page
-      </a>
-      <a class="button secondary" href="/nl/" lang="nl-BE">
+      <a class="button" href="/nl/">
         Naar de homepagina
+      </a>
+      <a class="button secondary" href="/en/" lang="en">
+        Back to the home page
       </a>
     </div>
   </main>

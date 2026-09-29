@@ -1,5 +1,42 @@
 ---
-import Home from '../components/Home.astro';
+// In production nginx answers `/` with a redirect to /nl/ or /en/ based on Accept-Language
+// (docker/nginx.conf), so this page is only seen by `astro dev`/`preview` and servers without it.
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+import { defaultLocale, homePath } from '../i18n/locales';
 ---
 
-<Home locale="en" />
+<Base locale={defaultLocale} title={site.name} noindex>
+  <meta slot="head" http-equiv="refresh" content={`0; url=${homePath(defaultLocale)}`} />
+  <main id="main" class="container chooser">
+    <h1>{site.name}</h1>
+    <ul>
+      <li>
+        <a href={homePath('nl')} hreflang="nl-BE" lang="nl-BE">
+          Nederlands
+        </a>
+      </li>
+      <li>
+        <a href={homePath('en')} hreflang="en" lang="en">
+          English
+        </a>
+      </li>
+    </ul>
+  </main>
+</Base>
+
+<style>
+  .chooser {
+    display: grid;
+    gap: var(--space-l);
+    padding-block: var(--space-2xl);
+  }
+
+  ul {
+    display: flex;
+    gap: var(--space-l);
+    padding: 0;
+    list-style: none;
+    font-size: var(--step-1);
+  }
+</style>

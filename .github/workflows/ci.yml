@@ -57,7 +57,16 @@ jobs:
         run: |
           docker run -d --name site --read-only --tmpfs /tmp --cap-drop ALL -p 8080:8080 florianvdab-site:ci
           for i in $(seq 1 20); do curl -fsS -o /dev/null http://127.0.0.1:8080/ && break; sleep 1; done
-          curl -fsSI http://127.0.0.1:8080/ | tee headers.txt
+          curl -fsSI http://127.0.0.1:8080/nl/ | tee headers.txt
           grep -qi '^content-security-policy:' headers.txt
           test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8080/nope)" = 404
+          for page in /nl/ /en/; do
+            test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8080$page)" = 200
+          done
+          # `/` redirects by the browser's first language; Dutch when there is no preference.
+          lang() { curl -s -o /dev/null -w '%{redirect_url}' ${1:+-H "Accept-Language: $1"} http://127.0.0.1:8080/; }
+          test "$(lang 'nl-BE,nl;q=0.9,en;q=0.8')" = http://127.0.0.1:8080/nl/
+          test "$(lang 'en-US,en;q=0.9,nl;q=0.8')" = http://127.0.0.1:8080/en/
+          test "$(lang 'fr-BE')" = http://127.0.0.1:8080/en/
+          test "$(lang '')" = http://127.0.0.1:8080/nl/
           docker image ls florianvdab-site:ci

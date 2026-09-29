@@ -27,7 +27,8 @@ docker compose -f compose.dev.yaml --profile dev up -d dev     hot-reload dev se
 
 ## Conventions
 
-- **Bilingual (en at `/`, nl at `/nl/`).** Content lives in `src/content/` with `{ en, nl }` text fields
+- **Bilingual: nl at `/nl/` (default), en at `/en/`.** `/` is a 302 in nginx on the browser's first
+  Accept-Language (nl → nl, other → en, none → nl); `src/pages/index.astro` is only a dev fallback. Content lives in `src/content/` with `{ en, nl }` text fields
   (schemas in `src/content.config.ts`); interface text in `src/i18n/ui.ts` (both languages or it's a
   type error); language-neutral constants in `src/data/site.ts`. Every component takes a `locale` prop.
   Don't hard-code resume content or UI strings in components. Dutch is written in the informal "je" form.
