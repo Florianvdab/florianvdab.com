@@ -46,6 +46,8 @@ const projects = defineCollection({
         repo: z.url().optional(),
         demo: z.url().optional(),
         private: z.boolean(),
+        /** Short label shown instead of links, e.g. for a project with no public code. */
+        badge: z.string().min(1).max(40).optional(),
         featured: z.boolean(),
         order: z.number().int(),
         image: image().optional(),

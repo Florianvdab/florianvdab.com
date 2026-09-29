@@ -31,3 +31,11 @@ export function formatDuration(start: string, end: string | null, now: Date = ne
   if (rest) parts.push(`${rest} ${rest === 1 ? 'mo' : 'mos'}`);
   return parts.join(' ');
 }
+
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+/** "2025-06" → "Jun 2025". */
+export function formatYearMonth(value: string): string {
+  const index = monthIndex(value);
+  return `${MONTHS[index % 12]} ${Math.floor(index / 12)}`;
+}

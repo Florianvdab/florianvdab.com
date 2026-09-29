@@ -6,6 +6,8 @@ export const site = {
   title: 'Florian Vandenabeele: full-stack developer',
   description:
     'Full-stack developer (Java/Spring, Vue/Nuxt, Flutter) in West Flanders, Belgium. Also builds fast, affordable static websites.',
+  tagline:
+    'Full-stack developer (Java/Spring, Vue/Nuxt, Flutter) building reliable software for government, payments and ERP.',
   email: 'Florian.vdab@outlook.com',
   location: 'West Flanders, Belgium',
   social: {

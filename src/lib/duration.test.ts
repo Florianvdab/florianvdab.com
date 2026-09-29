@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { currentYearMonth, formatDuration, monthIndex } from './duration';
+import { currentYearMonth, formatDuration, formatYearMonth, monthIndex } from './duration';
 
 describe('formatDuration', () => {
   it('counts a single month as "1 mo"', () => {
@@ -45,5 +45,10 @@ describe('helpers', () => {
 
   it('formats the current month in UTC', () => {
     expect(currentYearMonth(new Date(Date.UTC(2026, 0, 31, 23, 30)))).toBe('2026-01');
+  });
+
+  it('formats a month for display', () => {
+    expect(formatYearMonth('2025-06')).toBe('Jun 2025');
+    expect(formatYearMonth('2021-12')).toBe('Dec 2021');
   });
 });

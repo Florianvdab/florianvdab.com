@@ -1,0 +1,35 @@
+---
+import { getCollection } from 'astro:content';
+import ProjectCard from './ProjectCard.astro';
+import Section from './Section.astro';
+
+// Featured first, then by `order`.
+const projects = (await getCollection('projects')).sort(
+  (a, b) => Number(b.data.featured) - Number(a.data.featured) || a.data.order - b.data.order,
+);
+---
+
+<Section id="projects" title="Projects" wide tinted>
+  <ul class="grid">
+    {projects.map((project) => (
+      <li>
+        <ProjectCard project={project} />
+      </li>
+    ))}
+  </ul>
+</Section>
+
+<style>
+  .grid {
+    display: grid;
+    gap: var(--space-l);
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 48rem) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

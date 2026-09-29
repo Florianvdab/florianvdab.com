@@ -1,0 +1,45 @@
+---
+import Section from './Section.astro';
+import { skillGroups } from '../data/site';
+---
+
+<Section id="skills" title="Skills" wide>
+  <div class="groups">
+    {skillGroups.map((group) => (
+      <div class="group">
+        <h3 id={`skills-${group.name.toLowerCase().replace(/[^a-z]+/g, '-')}`}>{group.name}</h3>
+        <ul
+          class="chips"
+          aria-labelledby={`skills-${group.name.toLowerCase().replace(/[^a-z]+/g, '-')}`}
+        >
+          {group.skills.map((skill) => (
+            <li>{skill}</li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+</Section>
+
+<style>
+  .groups {
+    display: grid;
+    gap: var(--space-xl) var(--space-l);
+  }
+
+  @media (min-width: 48rem) {
+    .groups {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .groups {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  h3 {
+    margin-bottom: var(--space-s);
+  }
+</style>

@@ -1,0 +1,82 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+---
+
+<div class="hero container">
+  <p class="location">
+    <Icon name="map-pin" size={18} />
+    {site.location}
+  </p>
+  <h1>Hi, I'm Florian.</h1>
+  <p class="lede">{site.tagline}</p>
+  <div class="actions">
+    <a class="button" href="#projects">
+      See my work
+    </a>
+    <a class="button secondary" href="#freelance">
+      Hire me for a website
+    </a>
+  </div>
+  <ul class="social">
+    <li>
+      <a href={site.social.github}>
+        <Icon name="github" />
+        GitHub
+      </a>
+    </li>
+    <li>
+      <a href={site.social.linkedin}>
+        <Icon name="linkedin" />
+        LinkedIn
+      </a>
+    </li>
+  </ul>
+</div>
+
+<style>
+  .hero {
+    display: grid;
+    gap: var(--space-l);
+    padding-block: var(--space-2xl);
+  }
+
+  .location {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: var(--step--1);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .location :global(.icon) {
+    color: var(--color-accent);
+  }
+
+  .lede {
+    max-width: 44ch;
+    font-size: var(--step-1);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-s);
+  }
+
+  .social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-l);
+    padding: 0;
+    list-style: none;
+  }
+
+  .social a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-weight: 500;
+  }
+</style>

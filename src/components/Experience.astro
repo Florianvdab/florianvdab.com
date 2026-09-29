@@ -1,0 +1,138 @@
+---
+import { getCollection } from 'astro:content';
+import Section from './Section.astro';
+import { formatDuration, formatYearMonth, monthIndex } from '../lib/duration';
+
+const jobs = (await getCollection('experience')).sort(
+  (a, b) => monthIndex(b.data.start) - monthIndex(a.data.start),
+);
+---
+
+<Section id="experience" title="Experience" tinted>
+  <ol class="timeline">
+    {jobs.map(({ data: job }) => (
+      <li class:list={['entry', { current: job.end === null }]}>
+        <article>
+          <header>
+            <h3>{job.role}</h3>
+            <p class="company">
+              {job.company}
+              {job.client && <span class="client"> · for {job.client}</span>}
+            </p>
+            <p class="meta">
+              <time datetime={job.start}>{formatYearMonth(job.start)}</time>
+              {' – '}
+              {job.end ? (
+                <time datetime={job.end}>{formatYearMonth(job.end)}</time>
+              ) : (
+                <span class="badge">Present</span>
+              )}
+              <span class="duration"> · {formatDuration(job.start, job.end)}</span>
+            </p>
+            <p class="meta">
+              {job.location} · {job.type}
+            </p>
+          </header>
+          <p>{job.summary}</p>
+          {job.highlights.length > 0 && (
+            <ul class="highlights">
+              {job.highlights.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          )}
+          <ul class="chips" aria-label="Skills">
+            {job.skills.map((skill) => (
+              <li>{skill}</li>
+            ))}
+          </ul>
+        </article>
+      </li>
+    ))}
+  </ol>
+</Section>
+
+<style>
+  .timeline {
+    --dot: 14px;
+    --line-x: calc(var(--dot) / 2);
+    position: relative;
+    display: grid;
+    gap: var(--space-xl);
+    padding: 0 0 0 calc(var(--dot) + var(--space-l));
+    list-style: none;
+  }
+
+  /* The line */
+  .timeline::before {
+    content: '';
+    position: absolute;
+    top: 0.6em;
+    bottom: 0.6em;
+    left: calc(var(--line-x) - 1px);
+    width: 2px;
+    background: var(--sage);
+  }
+
+  .entry {
+    position: relative;
+  }
+
+  /* The dot */
+  .entry::before {
+    content: '';
+    position: absolute;
+    top: 0.45em;
+    left: calc(-1 * (var(--dot) + var(--space-l)));
+    width: var(--dot);
+    height: var(--dot);
+    background: var(--color-bg);
+    border: 3px solid var(--copper);
+    border-radius: 50%;
+  }
+
+  .entry.current::before {
+    background: var(--copper);
+  }
+
+  article {
+    display: grid;
+    gap: var(--space-s);
+  }
+
+  header {
+    display: grid;
+    gap: var(--space-2xs);
+  }
+
+  .company {
+    font-weight: 600;
+  }
+
+  .client {
+    font-weight: 400;
+  }
+
+  .meta {
+    font-size: var(--step--1);
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 0 var(--space-xs);
+    background: var(--espresso);
+    color: var(--cream);
+    border-radius: 999px;
+    font-weight: 600;
+  }
+
+  .highlights {
+    display: grid;
+    gap: var(--space-2xs);
+    padding-left: 1.2em;
+  }
+
+  .highlights li::marker {
+    color: var(--copper);
+  }
+</style>

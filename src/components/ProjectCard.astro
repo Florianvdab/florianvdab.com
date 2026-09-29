@@ -1,0 +1,117 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { title, pitch, highlights, tech, repo, demo, badge } = project.data;
+const isPrivate = project.data.private;
+const titleId = `project-${project.id}`;
+const demoMail = `mailto:${site.email}?subject=${encodeURIComponent(`Demo request: ${title}`)}`;
+---
+
+<article class="card" aria-labelledby={titleId}>
+  <h3 id={titleId}>{title}</h3>
+  <p class="pitch">{pitch}</p>
+  <ul class="highlights">
+    {highlights.map((item) => (
+      <li>{item}</li>
+    ))}
+  </ul>
+  <ul class="chips" aria-label={`Tech used in ${title}`}>
+    {tech.map((item) => (
+      <li>{item}</li>
+    ))}
+  </ul>
+  <div class="links">
+    {repo && (
+      <a href={repo}>
+        <Icon name="github" size={18} />
+        Source code<span class="visually-hidden"> for {title}</span>
+      </a>
+    )}
+    {demo && (
+      <a href={demo}>
+        <Icon name="arrow-up-right" size={18} />
+        Live demo<span class="visually-hidden"> of {title}</span>
+      </a>
+    )}
+    {isPrivate && (
+      <>
+        <span class="badge">
+          <Icon name="lock" size={16} />
+          Private repo
+        </span>
+        <a href={demoMail}>
+          Demo on request<span class="visually-hidden"> for {title}</span>
+        </a>
+      </>
+    )}
+    {badge && (
+      <span class="badge">
+        <Icon name="server" size={16} />
+        {badge}
+      </span>
+    )}
+  </div>
+</article>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+    height: 100%;
+    padding: var(--space-l);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-m);
+  }
+
+  .pitch {
+    font-weight: 500;
+  }
+
+  .highlights {
+    display: grid;
+    gap: var(--space-2xs);
+    padding-left: 1.2em;
+    font-size: var(--step--1);
+  }
+
+  .highlights li::marker {
+    color: var(--copper);
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-s) var(--space-l);
+    margin-top: auto;
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .links a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-weight: 600;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-2xs) var(--space-s);
+    background: var(--color-surface);
+    border-radius: 999px;
+    font-size: var(--step--1);
+    font-weight: 500;
+  }
+</style>

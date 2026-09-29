@@ -39,7 +39,15 @@
   --radius-s: 8px;
   --radius-m: 12px;
   --content-width: 72ch;
+  --wide-width: 68rem;
   --gutter: clamp(1rem, 0.6rem + 1.8vw, 2rem);
+  --header-height: 0px; /* header only sticks from 48rem up */
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --header-height: 4.5rem;
+  }
 }
 
 /* ==========================================================================
@@ -56,6 +64,7 @@
 }
 
 html {
+  scroll-padding-top: var(--header-height);
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
   scroll-behavior: smooth;
@@ -167,6 +176,64 @@ a:hover {
   margin-inline: auto;
 }
 
+.container.wide {
+  width: min(100% - 2 * var(--gutter), var(--wide-width));
+}
+
+/* Buttons. Cream on copper is ~4.2:1, so labels must stay bold and ≥ 19px (WCAG large text). */
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-s) var(--space-l);
+  background: var(--copper);
+  color: var(--cream);
+  border: 2px solid var(--copper);
+  border-radius: var(--radius-s);
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.button:hover {
+  background: var(--espresso);
+  border-color: var(--espresso);
+  color: var(--cream);
+  text-decoration: none;
+}
+
+.button.secondary {
+  background: transparent;
+  color: var(--espresso);
+  border-color: var(--espresso);
+}
+
+.button.secondary:hover {
+  background: var(--espresso);
+  color: var(--cream);
+}
+
+/* Chips: espresso on light sage (~9:1). */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  padding: 0;
+  list-style: none;
+}
+
+.chips li {
+  padding: 0.1rem var(--space-s);
+  background: color-mix(in srgb, var(--sage) 50%, var(--cream));
+  border-radius: 999px;
+  font-size: var(--step--1);
+  font-weight: 500;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -192,4 +259,8 @@ a:hover {
 
 .skip-link:focus {
   transform: none;
+}
+
+main:focus {
+  outline: none;
 }
