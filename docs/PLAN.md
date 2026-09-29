@@ -225,11 +225,11 @@ Refinement: `private: true` must not have a `repo`.
 
 ## 8. Phases
 
-### Phase 1: Scaffold _(in progress)_
+### Phase 1: Scaffold _(done 2026-09-29)_
 
 - [x] fnm + Node 24 LTS in user space; `~/dev/florianvdab.com`; `git init -b main`.
 - [x] `create astro` minimal template (TS strict); fonts, Prettier, `astro check` installed.
-- [x] `.nvmrc` (24), `engines.node` `>=24`, npm scripts: `check`, `format`, `format:check`, `test`.
+- [x] `.nvmrc` (24), `engines.node` `>=24`, npm scripts: `check`, `format`, `format:check` (`test` arrives with Vitest in phase 2).
 - [x] `global.css`: tokens, modern reset, fluid type scale (`clamp()`), fonts imported once in the layout.
 - [x] `Base.astro` layout + styled placeholder `index.astro`; replace the default favicons later (phase 4).
 - [x] `CLAUDE.md`: stack, commands, content location, palette + contrast rules, "no client JS
