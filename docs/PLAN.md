@@ -20,7 +20,9 @@ Last revised: 2026-09-29.
 | `.env.example` with `TUNNEL_TOKEN`                                         | Dropped                                                                                                                                                                                     | No tunnel token in this project.                                                                                                                      |
 | Node "LTS", unspecified                                                    | **Node 24 (Krypton)** via **fnm** in user space, pinned in `.nvmrc` + `engines`                                                                                                             | No system Node on athena and sudo needs a password; fnm lives in `~/.local`, picks up `.nvmrc` on `cd`.                                               |
 | Astro "latest"                                                             | **Astro 7**, TypeScript 6                                                                                                                                                                   | What `create astro` gave on 2026-09-29.                                                                                                               |
-| Lighthouse/axe run "somewhere"                                             | Run from the laptop's Chrome against the forwarded dev/preview port (or against the live site)                                                                                              | athena has no Chromium.                                                                                                                               |
+| Lighthouse/axe run "somewhere"                                             | Run on athena in a throwaway `zenika/alpine-chrome:with-node` container (`--network host --shm-size=1g`) with lighthouse + `@axe-core/puppeteer` in a scratch dir, against `astro preview`  | athena has no Chromium; Docker provides one without touching the host or the repo.                                                                    |
+| Mobile nav as `<details>` menu                                             | Links **wrap under the name** on mobile; header only sticky from 768px                                                                                                                      | A `<details>` menu can't close itself after a link tap without JS.                                                                                    |
+| Projects: PET, Polly, this site                                            | + **Home server** card (`badge` field instead of links)                                                                                                                                     | Florian's request. Shows what it runs, **never how it's secured**.                                                                                    |
 | Polly tech stack: "Florian to confirm"                                     | **Node.js, Express, vanilla HTML/CSS/JS, JSON-file storage, Docker**                                                                                                                        | Read from `~/stacks/polly`.                                                                                                                           |
 
 Things the original plan got right and stay as-is: Astro static output, zero client JS, content
@@ -169,7 +171,8 @@ hence the nightly rebuild on athena (phase 5).
 ### `src/content/projects/*.md` (frontmatter + short body)
 
 Schema: `title`, `pitch`, `highlights[]`, `tech[]`, `repo?` (url), `demo?` (url),
-`private: boolean`, `featured: boolean`, `order: number`, `image?` (via `image()` helper).
+`private: boolean`, `badge?` (short label shown instead of links), `featured: boolean`,
+`order: number`, `image?` (via `image()` helper) + `imageAlt?`.
 Refinements: `private: true` must not have a `repo`; `image` requires `imageAlt`. Both schemas are
 strict (unknown keys fail the build). Project Markdown bodies are optional and currently empty.
 
@@ -185,7 +188,10 @@ strict (unknown keys fail the build). Project Markdown bodies are optional and c
   name/group + quantities per item; live tally; one-click reset; Dutch UI, English code.
   Tech: **Node.js, Express, vanilla HTML/CSS/JS, JSON-file storage, Docker**.
   Card shows "Private repo, demo on request" + mailto.
-- **This website** (not featured, order 3): links to its own repo. Astro static build, Docker
+- **Home server** (featured, order 3, badge "Self-hosted · no public repo"): HP Z440 home lab,
+  about ten services on Debian + Docker. Lists apps and a vague "locked down and monitored" line;
+  no security specifics (firewall, tunnel, SSH, backups), no password manager, no public/private split.
+- **This website** (not featured, order 4): links to its own repo. Astro static build, Docker
   image, built and served from a home server via Cloudflare Tunnel.
 
 ---
@@ -249,7 +255,7 @@ strict (unknown keys fail the build). Project Markdown bodies are optional and c
 
 **Accept:** a deliberately broken content file fails `npm run build` with a clear error; tests pass.
 
-### Phase 3: Sections & components
+### Phase 3: Sections & components _(done 2026-09-29)_
 
 - Every section in §5 as components, rendered from content.
 - Semantic HTML (`header`, `main`, `section aria-labelledby`, `article`, `footer`), skip link,
@@ -260,7 +266,10 @@ strict (unknown keys fail the build). Project Markdown bodies are optional and c
   the CSP can stay `style-src 'self'`. Check `dist/` for inline `<script>`/`<style>`/`style=""`.
 
 **Accept:** right at 360/768/1280px; no `.js` in `dist/`; Lighthouse mobile ≥ 95 in all four and
-zero axe violations (run from the laptop's Chrome via the forwarded preview port).
+zero axe violations.
+**Result (2026-09-29):** no horizontal overflow at 360/768/1280; no JS/inline style in `dist/`;
+Lighthouse mobile 100/100/100/100 (LCP 1.4 s, TBT 0 ms, CLS 0.001); axe 0 violations (WCAG 2.2 AA +
+best-practice; 29 contrast "needs review" items on `color-mix()` backgrounds, computed ≥ 9:1).
 
 ### Phase 4: SEO & polish
 

@@ -27,9 +27,13 @@ npm run format         prettier --write (format:check in CI)
 - **Content lives in `src/content/`** (experience JSON, project Markdown), schemas in `src/content.config.ts`;
   site constants and skill groups in `src/data/site.ts`. Don't hard-code resume content in components.
 - Never invent copy (project descriptions, highlights, bios). Use what Florian supplied or ask.
+- **Never publish how the home server is secured** (firewall, tunnel setup, SSH, backups, fail2ban,
+  which services are public, the password manager). What it runs is fine; how it's protected is not.
 - **No client JS unless justified.** `dist/` should contain no `.js`. No inline `<script>`/`<style>`/`style=""`:
   the CSP is `script-src 'self'; style-src 'self'` (hence `build.inlineStylesheets: 'never'`).
 - Durations are computed at build time from `start`/`end`, never hard-coded.
+- Components in `src/components/`; `Section.astro` wraps each page section (heading + `aria-labelledby`).
+  Shared classes (`.container`, `.wide`, `.button`, `.chips`) live in `global.css`.
 - Semantic HTML, visible focus (copper outline), respect `prefers-reduced-motion`. Mobile-first, must work at 360px.
 
 ## Palette and contrast (WCAG AA)
