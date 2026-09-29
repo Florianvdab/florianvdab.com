@@ -32,6 +32,7 @@ const en = {
     contact: 'Contact',
   },
   switchTo: { label: 'NL', title: 'Nederlandse versie' },
+  darkMode: 'Dark mode',
   hero: {
     greeting: "Hi, I'm Florian.",
     seeWork: 'See my work',
@@ -137,6 +138,7 @@ const nl = {
     contact: 'Contact',
   },
   switchTo: { label: 'EN', title: 'English version' },
+  darkMode: 'Donkere modus',
   hero: {
     greeting: 'Hoi, ik ben Florian.',
     seeWork: 'Bekijk mijn werk',

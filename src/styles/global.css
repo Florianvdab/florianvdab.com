@@ -1,20 +1,40 @@
 /* ==========================================================================
    Design tokens
-   Contrast (WCAG AA): espresso on cream/sage for all normal text.
-   Copper on cream is ~4.2:1: large/bold text, borders, icons and decoration only.
+   Light (default) and dark themes via light-dark(): the browser picks by `color-scheme`, which
+   follows the OS unless the toggle sets <html data-theme="light|dark"> (public/theme.js).
+   Contrast (WCAG AA), light: espresso on cream/sage for all normal text; copper on cream is
+   ~4.2:1, so copper is for large/bold text, borders, icons and decoration only.
+   Dark: every text pairing is ≥ 7:1, including the lighter copper accent.
    ========================================================================== */
 :root {
+  color-scheme: light dark;
+
   --cream: #f7f1de;
   --sage: #b0ba99;
   --copper: #9d6638;
   --espresso: #4e220f;
+  --night: #26140b; /* dark-theme background */
+  --night-surface: #3c1c0d;
+  --copper-light: #d4975f; /* dark-theme accent: 7:1 on --night */
 
-  --color-bg: var(--cream);
-  --color-text: var(--espresso);
-  --color-surface: color-mix(in srgb, var(--sage) 25%, var(--cream));
-  --color-border: var(--sage);
-  --color-accent: var(--copper);
-  --color-focus: var(--copper);
+  --color-bg: light-dark(var(--cream), var(--night));
+  --color-text: light-dark(var(--espresso), var(--cream));
+  --color-surface: light-dark(
+    color-mix(in srgb, var(--sage) 25%, var(--cream)),
+    var(--night-surface)
+  );
+  --color-border: light-dark(var(--sage), color-mix(in srgb, var(--sage) 40%, var(--night)));
+  --color-line: light-dark(var(--sage), color-mix(in srgb, var(--sage) 60%, var(--night)));
+  --color-accent: light-dark(var(--copper), var(--copper-light));
+  --color-on-accent: light-dark(var(--cream), var(--night));
+  --color-focus: var(--color-accent);
+  --color-chip: light-dark(
+    color-mix(in srgb, var(--sage) 50%, var(--cream)),
+    color-mix(in srgb, var(--sage) 22%, var(--night))
+  );
+  /* Inverted pills (e.g. "Present"): text colour as background. */
+  --color-inverse-bg: var(--color-text);
+  --color-inverse-text: var(--color-bg);
 
   --font-body: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --font-heading: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
@@ -48,6 +68,14 @@
   :root {
     --header-height: 4.5rem;
   }
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
 }
 
 /* ==========================================================================
@@ -164,8 +192,8 @@ a:hover {
 }
 
 ::selection {
-  background: var(--sage);
-  color: var(--espresso);
+  background: var(--color-chip);
+  color: var(--color-text);
 }
 
 /* ==========================================================================
@@ -180,15 +208,15 @@ a:hover {
   width: min(100% - 2 * var(--gutter), var(--wide-width));
 }
 
-/* Buttons. Cream on copper is ~4.2:1, so labels must stay bold and ≥ 19px (WCAG large text). */
+/* Buttons. Light: cream on copper is ~4.2:1, so labels stay bold and ≥ 19px (WCAG large text). */
 .button {
   display: inline-flex;
   align-items: center;
   gap: var(--space-xs);
   padding: var(--space-s) var(--space-l);
-  background: var(--copper);
-  color: var(--cream);
-  border: 2px solid var(--copper);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  border: 2px solid var(--color-accent);
   border-radius: var(--radius-s);
   font-size: 1.2rem;
   font-weight: 700;
@@ -200,24 +228,24 @@ a:hover {
 }
 
 .button:hover {
-  background: var(--espresso);
-  border-color: var(--espresso);
-  color: var(--cream);
+  background: var(--color-text);
+  border-color: var(--color-text);
+  color: var(--color-bg);
   text-decoration: none;
 }
 
 .button.secondary {
   background: transparent;
-  color: var(--espresso);
-  border-color: var(--espresso);
+  color: var(--color-text);
+  border-color: var(--color-text);
 }
 
 .button.secondary:hover {
-  background: var(--espresso);
-  color: var(--cream);
+  background: var(--color-text);
+  color: var(--color-bg);
 }
 
-/* Chips: espresso on light sage (~9:1). */
+/* Chips: ≥ 9:1 in both themes. */
 .chips {
   display: flex;
   flex-wrap: wrap;
@@ -228,7 +256,7 @@ a:hover {
 
 .chips li {
   padding: 0.1rem var(--space-s);
-  background: color-mix(in srgb, var(--sage) 50%, var(--cream));
+  background: var(--color-chip);
   border-radius: 999px;
   font-size: var(--step--1);
   font-weight: 500;
@@ -251,8 +279,8 @@ a:hover {
   left: var(--space-s);
   z-index: 100;
   padding: var(--space-xs) var(--space-m);
-  background: var(--espresso);
-  color: var(--cream);
+  background: var(--color-inverse-bg);
+  color: var(--color-inverse-text);
   border-radius: var(--radius-s);
   transform: translateY(-200%);
 }

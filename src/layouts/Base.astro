@@ -47,8 +47,10 @@ const ogImage = new URL('/og-image.png', site.url).href;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <meta name="theme-color" content="#F7F1DE" />
-
+    <meta name="theme-color" content="#F7F1DE" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#26140B" media="(prefers-color-scheme: dark)" />
+    <!-- Classic blocking script on purpose: applies a saved theme before first paint. -->
+    <script is:inline src="/theme.js"></script>
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={title} />

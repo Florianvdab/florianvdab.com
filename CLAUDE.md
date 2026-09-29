@@ -35,7 +35,8 @@ docker compose -f compose.dev.yaml --profile dev up -d dev     hot-reload dev se
 - Never invent copy (project descriptions, highlights, bios). Use what Florian supplied or ask.
 - **Never publish how the home server is secured** (firewall, tunnel setup, SSH, backups, fail2ban,
   which services are public, the password manager). What it runs is fine; how it's protected is not.
-- **No client JS unless justified.** `dist/` should contain no `.js`. No inline `<script>`/`<style>`/`style=""`:
+- **No client JS unless justified.** The only script is `public/theme.js` (dark-mode toggle, classic
+  blocking `<script is:inline src>` in `<head>`; CI fails on any other `.js` or inline/bundled script). No inline `<script>`/`<style>`/`style=""`:
   the CSP is `script-src 'self'; style-src 'self'` (hence `build.inlineStylesheets: 'never'`).
 - Durations are computed at build time from `start`/`end`, never hard-coded.
 - Components in `src/components/`; `Home.astro` is the whole page for one locale, `Section.astro` wraps each page section (heading + `aria-labelledby`).
@@ -43,6 +44,10 @@ docker compose -f compose.dev.yaml --profile dev up -d dev     hot-reload dev se
 - Semantic HTML, visible focus (copper outline), respect `prefers-reduced-motion`. Mobile-first, must work at 360px.
 
 ## Palette and contrast (WCAG AA)
+
+Colours are semantic tokens (`--color-bg`, `--color-text`, `--color-accent`, `--color-on-accent`, `--color-chip`, …)
+defined once with `light-dark()` in `global.css`; components never use the raw palette. Dark theme:
+background `#26140B`, text cream, accent `#D4975F` (7:1). The table below is the light theme.
 
 | Token        | Hex       | Use                                |
 | ------------ | --------- | ---------------------------------- |

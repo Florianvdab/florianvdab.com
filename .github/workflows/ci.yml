@@ -31,10 +31,12 @@ jobs:
       - run: npm test
       - run: npm run build
 
-      - name: No client-side JavaScript in the build
+      - name: No client-side JavaScript except the theme toggle
         run: |
-          if find dist -name '*.js' | grep -q .; then
-            echo "::error::dist/ contains JavaScript:"; find dist -name '*.js'; exit 1
+          extra=$(find dist -name '*.js' ! -path dist/theme.js)
+          if [ -n "$extra" ]; then echo "::error::unexpected JavaScript in dist/:"; echo "$extra"; exit 1; fi
+          if grep -rlE '<script(>| (type="module"|async|defer))' dist --include='*.html'; then
+            echo "::error::inline or bundled <script> found (CSP allows only /theme.js)"; exit 1
           fi
 
   docker:

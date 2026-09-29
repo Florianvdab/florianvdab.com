@@ -1,4 +1,5 @@
 ---
+import Icon from './Icon.astro';
 import { site } from '../data/site';
 import { homePath, htmlLang, locales, type Locale } from '../i18n/locales';
 import { useTranslations } from '../i18n/ui';
@@ -34,16 +35,30 @@ const links = [
         ))}
       </ul>
     </nav>
-    <a
-      class="lang"
-      href={homePath(other)}
-      hreflang={htmlLang[other]}
-      lang={htmlLang[other]}
-      aria-label={t.switchTo.title}
-      title={t.switchTo.title}
-    >
-      {t.switchTo.label}
-    </a>
+    <div class="tools">
+      <button
+        type="button"
+        class="theme-toggle"
+        data-theme-toggle
+        aria-pressed="false"
+        title={t.darkMode}
+        hidden
+      >
+        <Icon name="moon" class="when-light" />
+        <Icon name="sun" class="when-dark" />
+        <span class="visually-hidden">{t.darkMode}</span>
+      </button>
+      <a
+        class="lang"
+        href={homePath(other)}
+        hreflang={htmlLang[other]}
+        lang={htmlLang[other]}
+        aria-label={t.switchTo.title}
+        title={t.switchTo.title}
+      >
+        {t.switchTo.label}
+      </a>
+    </div>
   </div>
 </header>
 
@@ -59,13 +74,14 @@ const links = [
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: var(--space-xs) var(--space-l);
+    gap: var(--space-xs) var(--space-s);
     padding-block: var(--space-s);
   }
 
   .wordmark {
     font-family: var(--font-heading);
-    font-size: var(--step-1);
+    /* Shrinks on narrow phones so name + buttons share one row down to 320px. */
+    font-size: clamp(1rem, 0.6rem + 2.2vw, 1.5rem);
     font-weight: 700;
     text-decoration: none;
   }
@@ -98,6 +114,42 @@ const links = [
     text-decoration-thickness: 2px;
   }
 
+  /* Theme toggle + language switch: stay together, top right on every screen size. */
+  .tools {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin-left: auto;
+  }
+
+  /* Revealed by public/theme.js; the moon shows while light, the sun while dark. */
+  .theme-toggle {
+    display: inline-grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    background: none;
+    color: var(--color-text);
+    border: 1px solid var(--color-text);
+    border-radius: var(--radius-s);
+    cursor: pointer;
+  }
+
+  .theme-toggle[hidden] {
+    display: none;
+  }
+
+  .theme-toggle:hover {
+    background: var(--color-text);
+    color: var(--color-bg);
+  }
+
+  .theme-toggle[aria-pressed='true'] :global(.when-light),
+  .theme-toggle[aria-pressed='false'] :global(.when-dark) {
+    display: none;
+  }
+
   .lang {
     padding: var(--space-2xs) var(--space-s);
     border: 1px solid var(--color-text);
@@ -114,6 +166,10 @@ const links = [
   }
 
   @media (min-width: 48rem) {
+    .bar {
+      column-gap: var(--space-l);
+    }
+
     .site-header {
       position: sticky;
       top: 0;
@@ -126,6 +182,10 @@ const links = [
       order: 0;
       flex-basis: auto;
       margin-left: auto;
+    }
+
+    .tools {
+      margin-left: 0;
     }
 
     nav a {

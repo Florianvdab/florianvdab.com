@@ -91,7 +91,7 @@ const jobs = (await getCollection('experience')).sort(
     bottom: 0.6em;
     left: calc(var(--line-x) - 1px);
     width: 2px;
-    background: var(--sage);
+    background: var(--color-line);
   }
 
   .entry {
@@ -107,12 +107,12 @@ const jobs = (await getCollection('experience')).sort(
     width: var(--dot);
     height: var(--dot);
     background: var(--color-bg);
-    border: 3px solid var(--copper);
+    border: 3px solid var(--color-accent);
     border-radius: 50%;
   }
 
   .entry.current::before {
-    background: var(--copper);
+    background: var(--color-accent);
   }
 
   article {
@@ -140,8 +140,8 @@ const jobs = (await getCollection('experience')).sort(
   .badge {
     display: inline-block;
     padding: 0 var(--space-xs);
-    background: var(--espresso);
-    color: var(--cream);
+    background: var(--color-inverse-bg);
+    color: var(--color-inverse-text);
     border-radius: 999px;
     font-weight: 600;
   }
@@ -153,6 +153,6 @@ const jobs = (await getCollection('experience')).sort(
   }
 
   .highlights li::marker {
-    color: var(--copper);
+    color: var(--color-accent);
   }
 </style>

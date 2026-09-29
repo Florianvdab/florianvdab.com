@@ -403,7 +403,13 @@ Known cosmetic gap: the image's `revision` label is `unknown` when built from th
       (302, `Vary: Accept-Language`, `no-store`) on the browser's first language: nl → `/nl/`, any
       other → `/en/`, none → `/nl/`. No cookie, so the site stays cookie-free; a manual switch isn't
       remembered on the next visit to `/`. `x-default` → `/`. Covered by the CI smoke test.
-- [ ] Dark mode toggle.
+- [x] Dark mode: tokens defined once with `light-dark()` + `color-scheme`; follows the OS, toggle
+      overrides via `<html data-theme>` saved in localStorage (try/catch). `public/theme.js` is the
+      only script: classic blocking `<script src>` in `<head>` so a saved theme applies before first
+      paint; button starts `hidden` so no-JS visitors never see a dead control. Dark palette:
+      bg `#26140B`, surface `#3C1C0D`, accent `#D4975F` (7:1; the plan's copper-on-espresso was 2.8:1).
+      Verified: OS light/dark, toggle, persistence across reload, no-JS, axe 0 in dark, no CSP errors,
+      header on one row down to 320px. CI allows only `dist/theme.js`.
 - [ ] Florian to review Dutch copy and the About/Freelance/home-server wording before pushing.
 
 ---
