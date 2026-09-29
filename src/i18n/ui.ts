@@ -149,14 +149,14 @@ const nl = {
   about: {
     title: 'Over mij',
     paragraphs: [
-      'Ik ben een full-stack developer uit West-Vlaanderen. Sinds 2021 werkte ik aan een cloudgebaseerd ERP, betaalterminals en een backend voor het laden van elektrische voertuigen. Vandaag help ik applicaties van de Belgische federale overheid moderniseren.',
+      'Ik ben een full-stack developer uit West-Vlaanderen. Sinds 2021 werkte ik aan een cloudgebaseerd ERP, betaalterminals en een backend voor het laden van elektrische voertuigen. Vandaag help ik om applicaties van de Belgische overheid te moderniseren.',
       'Meestal werk ik met Java en Spring in de backend en Vue/Nuxt in de frontend, aangevuld met Flutter en Android als er een mobiele kant aan zit.',
     ],
     outside: 'Naast het werk',
     hobbies: {
       reading: 'Lezen',
       gaming: 'Gamen',
-      server: 'Sleutelen aan mijn thuisserver (die deze site host)',
+      server: 'Prutsen aan mijn homelab (die deze site host)',
     },
   },
   experience: {
@@ -210,7 +210,7 @@ const nl = {
     intro: 'Mailen is de snelste manier om me te bereiken. Je vindt me ook op GitHub en LinkedIn.',
     downloadCv: 'Download mijn cv',
   },
-  footer: { builtWith: 'Gemaakt met', servedFrom: 'gehost op een thuisserver' },
+  footer: { builtWith: 'Gemaakt met', servedFrom: 'gehost op een homelab' },
 } satisfies Shape<Dictionary>;
 
 const dictionaries: Record<Locale, Shape<Dictionary>> = { en, nl };
@@ -234,7 +234,7 @@ export const skillGroups: { name: Localized; skills: (string | Localized)[] }[] 
       'Flyway',
       'Docker',
       'GitHub Actions',
-      { en: 'Linux/home server', nl: 'Linux/thuisserver' },
+      { en: 'Linux/home server', nl: 'Linux/homelab' },
     ],
   },
   { name: { en: 'Other', nl: 'Overig' }, skills: ['.NET/C#', 'OCPI'] },

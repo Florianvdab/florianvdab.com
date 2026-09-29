@@ -2,7 +2,7 @@
 title: PET, Personal Expense Tracker
 pitch:
   en: A lightweight, self-hosted personal finance manager built for a home server.
-  nl: Een lichte, zelf-gehoste app voor persoonlijke financiën, gebouwd voor een thuisserver.
+  nl: Een lichte, zelf-gehoste app voor persoonlijke financiën, gebouwd voor een homelab.
 highlights:
   en:
     - Monthly-closing workflow that carries the remaining balance into the next month

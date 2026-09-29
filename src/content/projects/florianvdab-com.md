@@ -17,7 +17,7 @@ highlights:
     - Inhoud staat in getypeerde JSON- en Markdown-bestanden, gevalideerd tijdens de build
     - Beschikbaar in het Engels en het Nederlands
     - Geserveerd door nginx in een kleine Docker-image zonder rootrechten, met strikte security headers
-    - Gebouwd en gehost op een thuisserver via een Cloudflare Tunnel
+    - Gebouwd en gehost op een homelab via een Cloudflare Tunnel
 tech:
   - Astro
   - TypeScript

@@ -1,7 +1,7 @@
 ---
 title:
   en: Home server
-  nl: Thuisserver
+  nl: Homelab
 pitch:
   en: A second-hand HP Z440 workstation turned into a self-hosted home lab, running about ten services on Debian and Docker.
   nl: Een tweedehands HP Z440-workstation omgebouwd tot zelf-gehost homelab, met een tiental diensten op Debian en Docker.
