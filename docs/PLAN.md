@@ -31,7 +31,7 @@ security headers, GitHub Actions for checks, the palette and contrast rules.
 
 ## 1. Goal
 
-A fast, single-page portfolio site for **Florian Van den Abeele (Florianvdab)**, full-stack
+A fast, single-page portfolio site for **Florian Vandenabeele (Florianvdab)**, full-stack
 developer in West Flanders, Belgium. It must:
 
 - Present the resume (experience timeline, skills).
@@ -160,7 +160,7 @@ fields and text from the original plan:
 
 Schema: `role`, `company`, `client?`, `start` (`YYYY-MM`), `end` (`YYYY-MM` | null),
 `location`, `type` (enum: Full-time, Part-time, Freelance, Internship), `summary`,
-`highlights[]`, `skills[]`.
+`highlights[]`, `skills[]`. Refinement: `end` not before `start`.
 
 Durations ("1 yr 4 mos") are **computed at build time** by `formatDuration(start, end)`,
 counting both the start and end month (LinkedIn convention). "Present" only moves on rebuild,
@@ -170,7 +170,8 @@ hence the nightly rebuild on athena (phase 5).
 
 Schema: `title`, `pitch`, `highlights[]`, `tech[]`, `repo?` (url), `demo?` (url),
 `private: boolean`, `featured: boolean`, `order: number`, `image?` (via `image()` helper).
-Refinement: `private: true` must not have a `repo`.
+Refinements: `private: true` must not have a `repo`; `image` requires `imageAlt`. Both schemas are
+strict (unknown keys fail the build). Project Markdown bodies are optional and currently empty.
 
 - **PET, Personal Expense Tracker** (featured, public, order 1)
   Repo https://github.com/Florianvdab/Personal-Expense-Tracker. Lightweight, self-hosted
@@ -239,7 +240,7 @@ Refinement: `private: true` must not have a `repo`.
 **Accept:** `npm run dev` shows a styled placeholder; `npm run build` and `npm run check` pass;
 `git status` clean.
 
-### Phase 2: Content model
+### Phase 2: Content model _(done 2026-09-29)_
 
 - Collections + Zod schemas in `src/content.config.ts` (glob loader).
 - All experience/project files from §6 and `src/data/site.ts`.
@@ -362,7 +363,7 @@ image < 30 MB; `curl -I` shows the security headers; CI green on `main`;
 - [x] LinkedIn: https://www.linkedin.com/in/florianvdab/
 - [x] Registry: none (no Docker Hub); athena builds from the repo.
 - [x] Polly's tech stack (read from `~/stacks/polly`).
-- [ ] Display name spelling: plan says "Florian Van den Abeele", git config says "Florian Vandenabeele".
+- [x] Display name: **Florian Vandenabeele** (decided 2026-09-29).
 - [ ] Bel&Bo highlight, if any.
 - [ ] Optional: profile photo, CV PDF, Dutch translations, Polly screenshot.
 

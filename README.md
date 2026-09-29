@@ -1,6 +1,6 @@
 # florianvdab.com
 
-Source of [florianvdab.com](https://florianvdab.com), the portfolio of Florian Van den Abeele,
+Source of [florianvdab.com](https://florianvdab.com), the portfolio of Florian Vandenabeele,
 full-stack developer in West Flanders, Belgium.
 
 A static [Astro](https://astro.build) site with zero client-side JavaScript, served by nginx in a

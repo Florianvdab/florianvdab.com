@@ -1,0 +1,15 @@
+{
+  "role": "Software Engineer",
+  "company": "CCV Lab",
+  "start": "2023-09",
+  "end": "2025-05",
+  "location": "Kortrijk · Hybrid",
+  "type": "Full-time",
+  "summary": "Java Spring & Android development across three major projects, from backend systems to Android payment terminals.",
+  "highlights": [
+    "Helped design and implement an EV charging backend following the OCPI standard",
+    "Refactored and maintained a cloud-based payment API orchestrating transactions on payment terminals",
+    "Built features and refactored the Spring REST API and Android terminals of the SalesPoint platform"
+  ],
+  "skills": ["Java", "Spring", "Android", "OCPI", "REST"]
+}

@@ -1,6 +1,6 @@
 # florianvdab.com
 
-Personal portfolio site for Florian Van den Abeele. Static Astro site, served by nginx in Docker
+Personal portfolio site for Florian Vandenabeele. Static Astro site, served by nginx in Docker
 on the home server `athena`, public via the host's Cloudflare Tunnel.
 The full roadmap and phase status live in [`docs/PLAN.md`](docs/PLAN.md). Read it before starting work.
 
@@ -18,13 +18,15 @@ npm ci                 install
 npm run dev            dev server on :4321 (for agents: `npx astro dev --background`, then `astro dev stop|status|logs`)
 npm run build          static build to dist/
 npm run check          astro check (types + templates)
+npm test               vitest run (src/**/*.test.ts)
 npm run format         prettier --write (format:check in CI)
 ```
 
 ## Conventions
 
-- **Content lives in `src/content/`** (experience JSON, project Markdown); site constants in `src/data/site.ts`.
-  Don't hard-code resume content in components.
+- **Content lives in `src/content/`** (experience JSON, project Markdown), schemas in `src/content.config.ts`;
+  site constants and skill groups in `src/data/site.ts`. Don't hard-code resume content in components.
+- Never invent copy (project descriptions, highlights, bios). Use what Florian supplied or ask.
 - **No client JS unless justified.** `dist/` should contain no `.js`. No inline `<script>`/`<style>`/`style=""`:
   the CSP is `script-src 'self'; style-src 'self'` (hence `build.inlineStylesheets: 'never'`).
 - Durations are computed at build time from `start`/`end`, never hard-coded.

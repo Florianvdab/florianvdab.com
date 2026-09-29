@@ -1,0 +1,15 @@
+{
+  "role": "Full Stack Developer",
+  "company": "The Beehive",
+  "client": "BOSA (Belgian federal government)",
+  "start": "2025-06",
+  "end": null,
+  "location": "Belgium",
+  "type": "Full-time",
+  "summary": "Full-stack consultant at BOSA via The Beehive, contributing to the modernization of government systems.",
+  "highlights": [
+    "Java/Spring and Nuxt/Vue development on government applications",
+    "Refactoring a monolith and migrating functionality to microservices"
+  ],
+  "skills": ["Java", "Spring", "Nuxt", "Vue", "Microservices"]
+}

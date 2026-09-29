@@ -1,0 +1,15 @@
+{
+  "role": "Medior Full Stack Developer",
+  "company": "Robaws",
+  "start": "2021-08",
+  "end": "2023-08",
+  "location": "Zwevegem · Hybrid",
+  "type": "Full-time",
+  "summary": "Worked across the entire stack of a leading Belgian cloud-based ERP: backend, web front-end and mobile.",
+  "highlights": [
+    "Developed and maintained the core application's back-end and front-end",
+    "Led development of two mobile apps that improved on-site worker productivity",
+    "Integrated third-party services into the platform"
+  ],
+  "skills": ["Java", "Flutter", "JavaScript", "REST"]
+}
