@@ -6,6 +6,8 @@ services:
     build:
       context: https://github.com/Florianvdab/florianvdab.com.git#main
       pull: true # also refresh the node/nginx base images on every build
+      args:
+        BUILD_MONTH: ${BUILD_MONTH:-} # set by `stacks update`; rebuilds the site monthly so durations stay current
     image: website:local
     container_name: website
     ports:

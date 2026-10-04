@@ -6,6 +6,9 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci --no-audit --no-fund
 COPY . .
+# Ongoing roles show "… – Present · 1 yr 5 mos", computed at build time. A new month busts the
+# cache from here so the nightly rebuild refreshes it even without a new commit.
+ARG BUILD_MONTH
 RUN npm run build
 
 # ---- Runtime: non-root nginx on :8080 ----
